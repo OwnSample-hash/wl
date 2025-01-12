@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"store/app/api/products"
 	"store/app/middleware"
 	"store/types/cfg"
 	"store/util"
@@ -16,7 +17,6 @@ import (
 
 	"github.com/gorilla/mux"
 
-	"store/app/api"
 	"store/app/api/auth"
 	"store/app/front"
 )
@@ -26,12 +26,19 @@ func main() {
 		wait            time.Duration
 		configPath      string
 		doNewConfigPath bool
+		doMigrate       bool
 	)
 
 	flag.DurationVar(&wait, "graceful-timeout", time.Second*15, "the duration for which the server gracefully wait for existing connections to finish - e.g. 15s or 1m")
 	flag.StringVar(&configPath, "cfg", "config.yaml", "path to the cfg file")
 	flag.BoolVar(&doNewConfigPath, "new-cfg", false, "create a new cfg file")
+	flag.BoolVar(&doMigrate, "migrate", false, "run db migrations")
 	flag.Parse()
+
+	if doMigrate {
+		util.Migrate(configPath)
+		return
+	}
 
 	config, err := util.GetConfig(configPath)
 	if err != nil {
@@ -52,6 +59,12 @@ func main() {
 						ReadTimeout:  15,
 						IdealTimeout: 60,
 					},
+					Redis: cfg.Redis{
+						Host:   "127.0.0.1",
+						Port:   6379,
+						Prefix: "store",
+						Pass:   "",
+					},
 				}
 				err = util.DumpConfig(configPath, config)
 				if err != nil {
@@ -69,6 +82,10 @@ func main() {
 	log.Println("Starting server")
 
 	util.InitStore(config)
+	err = util.InitDb(config.Db)
+	if err != nil {
+		panic(err)
+	}
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", front.HomeHandler)
@@ -79,10 +96,15 @@ func main() {
 
 	ApiRouter := r.PathPrefix("/api").Subrouter()
 
-	ApiRouter.HandleFunc("/products", api.GetProducts).Methods("GET")
+	ApiRouter.HandleFunc("/products", products.GetProducts).Methods("GET")
 	ApiRouter.HandleFunc("/auth", auth.SteamAuth).Methods("GET")
 	ApiRouter.HandleFunc("/auth/logout", auth.LogOut).Methods("GET")
 	ApiRouter.HandleFunc("/auth/callback", auth.SteamCallback).Methods("GET")
+
+	AdminRouter := r.PathPrefix("/admin").Subrouter()
+	AdminRouter.Use(middleware.CheckAdmin)
+	AdminRouter.HandleFunc("/", front.AdminHandler).Methods("GET")
+	AdminRouter.HandleFunc("/products", products.Add).Methods("POST")
 
 	http.Handle("/", r)
 	srv := &http.Server{

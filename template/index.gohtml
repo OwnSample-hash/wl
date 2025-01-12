@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{.Title}}</title>
+  <link href="/static/style/dark.css" rel="stylesheet" >
 </head>
 <body>
 {{if .SteamID}}
@@ -13,6 +14,23 @@
 <a href="/api/auth">
   <img src="/static/img/sits_large_border.png" alt="SITS">
 </a>
+{{end}}
+{{if .Prods}}
+  {{range .Prods}}
+    <div>
+      <div>{{.Name}}</div>
+      <div>Desc: {{.Description}}</div>
+      <div>€{{.Price}}</div>
+      <div>
+        {{.OneMonth}}
+      </div>
+      <div>{{.LifeTime}}</div>
+      <div>{{.CreatedAt}}</div>
+      <div>{{.UpdatedAt}}</div>
+    </div>
+  {{end}}
+{{else}}
+    <h1> No prods</h1>
 {{end}}
 </body>
 </html>

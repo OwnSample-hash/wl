@@ -1,4 +1,4 @@
-package api
+package products
 
 import (
 	"database/sql"
@@ -28,7 +28,7 @@ func GetRawProds() (prods []types.Product) {
 	prods = make([]types.Product, 0)
 	for rows.Next() {
 		prod := types.Product{}
-		if err := rows.Scan(&prod.ID, &prod.Name, &prod.Description, &prod.Price, &prod.CreatedAt, &prod.UpdatedAt); err != nil {
+		if err := rows.Scan(&prod.ID, &prod.Name, &prod.Description, &prod.Price, &prod.OneMonth, &prod.LifeTime, &prod.CreatedAt, &prod.UpdatedAt); err != nil {
 			log.Println(err)
 		}
 		prods = append(prods, prod)

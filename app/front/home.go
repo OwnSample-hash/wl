@@ -2,15 +2,11 @@ package front
 
 import (
 	"html/template"
-	"log"
 	"net/http"
+	"store/app/api/products"
+	"store/types"
 	"store/util"
 )
-
-type Payload struct {
-	Title   string
-	SteamID string
-}
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	tmpl, err := template.ParseFiles("template/index.gohtml")
@@ -26,20 +22,19 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	steamID, ok := session.Values["steamID"].(string)
-
-	var data Payload
+	var data types.Payload
 
 	if !ok {
-		log.Println("steamID not found")
-		data = Payload{
+		data = types.Payload{
 			Title:   "Home",
 			SteamID: "",
+			Prods:   products.GetRawProds(),
 		}
 	} else {
-		log.Println("steamID found", steamID)
-		data = Payload{
+		data = types.Payload{
 			Title:   "Home",
 			SteamID: steamID,
+			Prods:   products.GetRawProds(),
 		}
 	}
 	err = tmpl.Execute(w, data)

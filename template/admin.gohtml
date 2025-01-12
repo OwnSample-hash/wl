@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin of our shit</title>
+  <link href="/static/style/dark.css" rel="stylesheet" >
+</head>
+<body>
+{{.SteamID}}
+<h1>Add product</h1>
+<form action="/admin/products" id="new_prod">
+  <div><label for="name">Name<input type="text" name="name"/></label></div>
+  <div><label for="description">Desc<textarea id="description" name="description" form="new_prod"></textarea></label></div>
+  <div><label for="price">Price<input type="number" name="price"></label></div>
+  <div><label for="one_month">One month<input type="checkbox" name="one_month"></label></div>
+  <div><label for="life_time">Life time<input type="checkbox" name="life_time"></label></div>
+  <input type="submit" value="Submit" formmethod="post"/>
+</form>
+{{if .Prods}}
+  {{range .Prods}}
+    <div>
+      {{.Name}}
+      {{.Description}}
+      {{.Price}}
+      {{.OneMonth}}
+      {{.LifeTime}}
+      {{.CreatedAt}}
+      {{.UpdatedAt}}
+    </div>
+  {{end}}
+{{else}}
+  <h1> No prods</h1>
+{{end}}
+</body>
+</html>
