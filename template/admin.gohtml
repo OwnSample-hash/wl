@@ -1,36 +1,191 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Admin of our shit</title>
-  <link href="/static/style/dark.css" rel="stylesheet" >
+  <title>{{.Title}}</title>
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico" />
+
+  <link href="/static/style/dist/store.css" rel="stylesheet" />
+  <link href="/static/style/dist/utils.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-{{.SteamID}}
-<h1>Add product</h1>
-<form action="/admin/products" id="new_prod">
-  <div><label for="name">Name<input type="text" name="name"/></label></div>
-  <div><label for="description">Desc<textarea id="description" name="description" form="new_prod"></textarea></label></div>
-  <div><label for="price">Price<input type="number" name="price"></label></div>
-  <div><label for="one_month">One month<input type="checkbox" name="one_month"></label></div>
-  <div><label for="life_time">Life time<input type="checkbox" name="life_time"></label></div>
-  <input type="submit" value="Submit" formmethod="post"/>
-</form>
-{{if .Prods}}
-  {{range .Prods}}
-    <div>
-      {{.Name}}
-      {{.Description}}
-      {{.Price}}
-      {{.OneMonth}}
-      {{.LifeTime}}
-      {{.CreatedAt}}
-      {{.UpdatedAt}}
+  {{template "header" .}}
+  <div class="flex">
+    <form action="/admin/products" id="new_prod" class="w-1/3">
+      {{ .CsrfField }}
+      <div class="flex items-center mb-6">
+        <div class="w-1/3"></div>
+        <span class="text-gray-100 font-bold w-2/3">Add product</span>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="name">Name</label>
+        </div>
+        <div class="w-2/3">
+          <input name="name" class="input" id="name" type="text" placeholder="Name" />
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="description">Description</label>
+        </div>
+        <div class="w-2/3">
+          <textarea class="input" id="description" name="description" form="new_prod"></textarea>
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3"></div>
+        <div class="w-1/3"></div>
+        <label class="w-2/3 block text-gray-100 font-bold" for="one_month">
+          <input name="one_month" class="mr-2 leading-tight" type="checkbox" id="one_month" />
+          <span class="text-sm">Monthly</span>
+        </label>
+        <div class="w-1/3"></div>
+        <label class="w-1/3 block text-gray-100 font-bold" for="life_time">
+          <input name="life_time" class="mr-2 leading-tight" type="checkbox" id="life_time" />
+          <span class="text-sm">Life Time</span>
+        </label>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="price_per_month">Monthly</label>
+        </div>
+        <div class="w-2/3">
+          <input name="price_per_month" class="input" id="price_per_month" type="number" placeholder="15" value="0" />
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="price">Life time</label>
+        </div>
+        <div class="w-2/3">
+          <input name="price" class="input" id="price" type="number" placeholder="169" value="0" />
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label for="discount" class="gray-txt">Discount in %</label>
+        </div>
+        <div class="w-2/3">
+          <input name="discount" type="number" class="input" id="discount" placeholder="15" value="0" />
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="w-1/2"></div>
+        <button class="purple-btn" type="submit" formmethod="post" id="submit-prod">Add</button>
+      </div>
+    </form>
+    <form action="/admin/cupone" id="new_cupone" class="w-1/3">
+      <div class="flex items-center mb-6">
+        <div class="w-1/3"></div>
+        <span class="text-gray-100 font-bold w-2/3">Add Cupone</span>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="name">Name</label>
+        </div>
+        <div class="w-2/3">
+          <input name="name" class="input" id="name" type="text" placeholder="Name" />
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="price_per_month">Uses</label>
+        </div>
+        <div class="w-2/3">
+          <input name="price_per_month" class="input" id="price_per_month" type="number" placeholder="15" />
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="price_per_month">Off</label>
+        </div>
+        <div class="w-2/3">
+          <input name="price_per_month" class="input" id="price_per_month" type="number" placeholder="15" />
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="price_per_month">Till</label>
+        </div>
+        <div class="w-2/3">
+          <input name="price_per_month" class="input" id="price_per_month" type="datetime-local" placeholder="15" />
+        </div>
+      </div>
+      <div class="flex items-center">
+        <div class="w-1/2"></div>
+        <button class="purple-btn" type="submit" formmethod="post">
+          Add
+        </button>
+      </div>
+    </form>
+    <div class="w-1/3">
+      <div class="flex items-center mb-6">
+        <div class="w-1/3"></div>
+        <span class="text-gray-100 font-bold w-2/3">Latest Orders</span>
+      </div>
     </div>
-  {{end}}
-{{else}}
-  <h1> No prods</h1>
-{{end}}
+
+  </div>
+  {{if .Prods}}
+  <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-1 mb-2 md:grid-cols-4">
+    <script>
+      function sendPut(id) {
+        $.ajax({
+          method: "PUT",
+          url: "/admin/products/" + id,
+          headers: {
+            "X-CSRF-Token": ((token) => {return $($.parseXML(token)).find("input").attr("value");}) ("{{.CsrfField}}</input>")
+          },
+          data: {
+            name: $("#name").val(),
+            description: $("#description").val(),
+            one_month: $("#one_month").prop("checked") ? "on" : "off",
+            life_time: $("#life_time").prop("checked") ? "on" : "off",
+            price_per_month: $("#price_per_month").val(),
+            price: $("#price").val(),
+            discount: $("#discount").val()
+          },
+          success: function () {
+            location.reload();
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        });
+      }
+      function editThis(id, name, description, one_month, life_time, price_per_month, price, discount) {
+        $("#submit-prod").html("Edit");
+        $("#submit-prod").attr("type", "button");
+        $("#name").val(name);
+        $("#description").val(description);
+        $("#one_month").prop("checked", one_month === "true");
+        $("#life_time").prop("checked", life_time === "true");
+        $("#price_per_month").val(price_per_month);
+        $("#price").val(price);
+        $("#discount").val(discount);
+        $("#submit-prod").attr("onclick", "sendPut('" + id + "')");
+      }
+    </script>
+    {{range .Prods }}
+      {{template "card" .}}
+    {{ end }}
+  </div>
+  {{else}}
+  <div class="flex justify-center h-screen py-4 px-4">
+    <div class="bg-gray-200 border-l-4 border-orange-500 text-orange-700 p-4 justify-center" role="alert">
+      <p class="font-bold">Be Warned</p>
+      <p>No products.</p>
+    </div>
+  </div>
+  {{ end }}
+  {{template "footer" .}}
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
+
 </html>

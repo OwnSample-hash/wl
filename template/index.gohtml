@@ -1,36 +1,47 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{{.Title}}</title>
-  <link href="/static/style/dark.css" rel="stylesheet" >
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico" />
+  <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+  <link href="/static/style/dist/store.css" rel="stylesheet" />
+  <link href="/static/style/dist/utils.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
 </head>
+
 <body>
-{{if .SteamID}}
-  <h1>Welcome, {{.SteamID}}</h1>
-  <a href="/api/auth/logout">Logout</a>
-{{else}}
-<a href="/api/auth">
-  <img src="/static/img/sits_large_border.png" alt="SITS">
-</a>
-{{end}}
-{{if .Prods}}
-  {{range .Prods}}
-    <div>
-      <div>{{.Name}}</div>
-      <div>Desc: {{.Description}}</div>
-      <div>€{{.Price}}</div>
-      <div>
-        {{.OneMonth}}
-      </div>
-      <div>{{.LifeTime}}</div>
-      <div>{{.CreatedAt}}</div>
-      <div>{{.UpdatedAt}}</div>
+  {{template "header" .}}
+  {{if .Prods}}
+  <script>
+    function showPrice(place, kind, monthly, lifeTime) {
+      if (kind == "one_month") {
+        place.html("€" + monthly + " monthly");
+      } else {
+        place.html("€" + lifeTime + " for lifetime");
+      }
+    }
+  </script>
+  <div class="grid grid-flow-row-dense md:grid-cols-4 md:grid-rows-1 md:mb-2 grid-cols-1 grid-rows-1">
+    {{range .Prods}}
+      {{template "card" .}}
+    {{ end }}
+  </div>
+  {{else}}
+  <div class="flex justify-center md:py-4 md:px-4">
+    <div class="bg-gray-200 border-l-4 border-orange-500 text-orange-700 p-4 justify-center" role="alert">
+      <p class="font-bold">Be Warned</p>
+      <p>No products.</p>
     </div>
-  {{end}}
-{{else}}
-    <h1> No prods</h1>
-{{end}}
+  </div>
+  {{ end }}
+
+  {{template "footer" .}}
+  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
 </body>
+
 </html>
