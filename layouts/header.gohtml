@@ -1,0 +1,196 @@
+{{define "header"}}
+<nav class="md:py-4 md:pr-4 bg-gray-700">
+  <div class="flex invisible md:visible w-full md:w-auto content-center md:content-normal">
+    <div class="visible md:invisible flex-shrink-0 flex items-center md:hidden">
+      <button type="button" class="my-4 mx-4 md:mx-0 md:my-0" data-drawer-target="drawer-navigation"
+        data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
+        <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 12.32H22" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M2 18.32H22" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          <path d="M2 6.32001H22" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </button>
+      <div id="drawer-navigation" tabindex="-1" aria-labelledby="drawer-navigation-label"
+        class="fixed top-0 left-0 z-40 w-64 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-gray-800 ">
+        <h5 id="drawer-navigation-label" class="text-base font-semibold text-gray-100 uppercase">Menu</h5>
+        <button type="button" data-drawer-hide="drawer-navigation" aria-controls="drawer-navigation"
+          class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 end-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+          <span class="sr-only">Close menu</span>
+        </button>
+        <div class="py-4 overflow-y-auto md:py-0">
+          <ul class="space-y-2 font-medium md:space-y-0 md:font-normal">
+            <li>
+              <a href="/" class="flex items-center p-2 rounded-lg text-gray-100 hover:bg-gray-300 group">
+                <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M22 10.56C22 9.49913 21.5786 8.48171 20.8284 7.73157C20.0783 6.98142 19.0609 6.56 18 6.56H6C4.93913 6.56 3.92178 6.98142 3.17163 7.73157C2.42149 8.48171 2 9.49913 2 10.56"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M21.9999 10.56L20.9999 18.56C20.8507 19.6487 20.3192 20.649 19.5002 21.3818C18.6813 22.1146 17.6285 22.5322 16.5299 22.56H7.38989C6.29132 22.5322 5.23847 22.1146 4.41956 21.3818C3.60064 20.649 3.0691 19.6487 2.91992 18.56L1.91992 10.56"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M8.00977 6.25C8.00977 5.18913 8.43119 4.17172 9.18134 3.42157C9.93148 2.67142 10.9489 2.25 12.0098 2.25C13.0706 2.25 14.0881 2.67142 14.8382 3.42157C15.5883 4.17172 16.0098 5.18913 16.0098 6.25"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="ms-3">Store</span>
+              </a>
+            </li>
+            <li>
+              <a href="/license" class="flex items-center p-2 rounded-lg text-gray-100 hover:bg-gray-300 group">
+                <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M15 14.32C18.3137 14.32 21 11.6337 21 8.32001C21 5.0063 18.3137 2.32001 15 2.32001C11.6863 2.32001 9 5.0063 9 8.32001C9 11.6337 11.6863 14.32 15 14.32Z"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M8 19.32L6 17.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M5 22.32L3 20.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path d="M3 20.32L10.76 12.56" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span class="ms-3">License</span>
+              </a>
+            </li>
+            {{if .IsAdmin}}
+            <li>
+              <a href="/admin/" class="flex items-center p-2 rounded-lg text-gray-100 hover:bg-gray-300 group">
+                <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
+                    stroke="#f05252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
+                    stroke="#f05252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M15 17.57L17.76 20.57L23 15.28" stroke="#f05252" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
+                <span class="ms-3 text-red-500">Admin</span>
+              </a>
+            </li>
+            {{end}}
+            {{if .SteamID}}
+            <li>
+              <a href="/api/auth/logout" class="flex items-center p-2 rounded-lg text-gray-100 hover:bg-gray-300 group">
+                <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M15 18H23" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <span class="ms-3">Logout</span>
+              </a>
+            </li>
+            {{else}}
+            <li>
+              <a href="/api/auth">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
+                    stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M19 22V14" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M15 18H23" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </a>
+            </li>
+            {{end}}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+    <div class="flex visible md:invisible items-center w-auto content-center">
+      <p class="font-bold w-full place-content-center">Shop</p>
+    </div>
+    <!-- Lg header -->
+
+    <div class="md:pl-8 md:space-x-3 pl-1 w-1/2 h-12 space-x-1 font-bold flex">
+      <div class="md:w-1/8">
+        <img src="/static/img/index.jpg" alt="anyád" class="size-11/12 object-fill" style="transform: scaleX(-1);">
+      </div>
+      <div class="w-1/2">
+        <a href="/">Store</a>
+      </div>
+    </div>
+    <div class="w-1/2 h-12">
+      <div class="flex justify-end space-x-6">
+        <a href="/" class="flex items-center space-x-2">
+          <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M22 10.56C22 9.49913 21.5786 8.48171 20.8284 7.73157C20.0783 6.98142 19.0609 6.56 18 6.56H6C4.93913 6.56 3.92178 6.98142 3.17163 7.73157C2.42149 8.48171 2 9.49913 2 10.56"
+              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M21.9999 10.56L20.9999 18.56C20.8507 19.6487 20.3192 20.649 19.5002 21.3818C18.6813 22.1146 17.6285 22.5322 16.5299 22.56H7.38989C6.29132 22.5322 5.23847 22.1146 4.41956 21.3818C3.60064 20.649 3.0691 19.6487 2.91992 18.56L1.91992 10.56"
+              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path
+              d="M8.00977 6.25C8.00977 5.18913 8.43119 4.17172 9.18134 3.42157C9.93148 2.67142 10.9489 2.25 12.0098 2.25C13.0706 2.25 14.0881 2.67142 14.8382 3.42157C15.5883 4.17172 16.0098 5.18913 16.0098 6.25"
+              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <p>Store</p>
+        </a>
+        {{if .IsAdmin}}
+        <div class="flex justify-end space-x-6">
+          <a href="/admin/" class="flex items-center space-x-2">
+            <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
+                stroke="#f05252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
+                stroke="#f05252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M15 17.57L17.76 20.57L23 15.28" stroke="#f05252" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <p class="text-red-500">Admin</p>
+          </a>
+        </div>
+        {{end}}
+        {{if .SteamID}}
+        <div class="flex justify-end space-x-6">
+          <a href="/license" class="flex items-center space-x-2">
+            <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M15 14.32C18.3137 14.32 21 11.6337 21 8.32001C21 5.0063 18.3137 2.32001 15 2.32001C11.6863 2.32001 9 5.0063 9 8.32001C9 11.6337 11.6863 14.32 15 14.32Z"
+                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M8 19.32L6 17.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M5 22.32L3 20.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M3 20.32L10.76 12.56" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+            <p>License</p>
+          </a>
+        </div>
+        <div class="flex justify-end space-x-6">
+          <a href="/api/auth/logout" class="flex items-center space-x-2">
+            <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
+                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
+                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              <path d="M15 18H23" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <p>Logout</p>
+          </a>
+        </div>
+        <img src="{{.User.Avatar}}" alt="Steam Prof pic" class="rounded">
+        {{else}}
+        <a href="/api/auth">
+          <img src="/static/img/sits_small.png" alt="SITS">
+        </a>
+        {{end}}
+      </div>
+    </div>
+  </div>
+</nav>
+<main class=" mb-auto">
+  {{end}}
