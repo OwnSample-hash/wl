@@ -15,7 +15,9 @@ import (
 	"store/util"
 	"time"
 
+	"github.com/gorilla/csrf"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/securecookie"
 
 	"store/app/api/auth"
 	"store/app/front"
@@ -27,16 +29,18 @@ func main() {
 		configPath      string
 		doNewConfigPath bool
 		doMigrate       bool
+		migrateDown     bool
 	)
 
 	flag.DurationVar(&wait, "graceful-timeout", time.Second*15, "the duration for which the server gracefully wait for existing connections to finish - e.g. 15s or 1m")
 	flag.StringVar(&configPath, "cfg", "config.yaml", "path to the cfg file")
 	flag.BoolVar(&doNewConfigPath, "new-cfg", false, "create a new cfg file")
 	flag.BoolVar(&doMigrate, "migrate", false, "run db migrations")
+	flag.BoolVar(&migrateDown, "down", false, "run db migrations down")
 	flag.Parse()
 
 	if doMigrate {
-		util.Migrate(configPath)
+		util.Migrate(configPath, migrateDown)
 		return
 	}
 
@@ -89,6 +93,13 @@ func main() {
 
 	r := mux.NewRouter()
 	r.HandleFunc("/", front.HomeHandler)
+	r.HandleFunc("/license", front.LicenseHandler)
+	r.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/img/favicon.ico")
+	})
+
+	CSRF := csrf.Protect(securecookie.GenerateRandomKey(32), csrf.Secure(false))
+	r.Use(CSRF)
 
 	r.PathPrefix("/static/").Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("static/"))))
 
@@ -105,6 +116,8 @@ func main() {
 	AdminRouter.Use(middleware.CheckAdmin)
 	AdminRouter.HandleFunc("/", front.AdminHandler).Methods("GET")
 	AdminRouter.HandleFunc("/products", products.Add).Methods("POST")
+	AdminRouter.HandleFunc("/products/{id}", products.Delete).Methods("DELETE")
+	AdminRouter.HandleFunc("/products/{id}", products.Patch).Methods("PUT")
 
 	http.Handle("/", r)
 	srv := &http.Server{
@@ -137,7 +150,7 @@ func main() {
 		panic(err)
 	}
 
-	if util.DumpConfig(configPath, config) != nil {
+	if err = util.DumpConfig(configPath, config); err != nil {
 		panic(err)
 	}
 }

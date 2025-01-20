@@ -1,24 +1,26 @@
 package auth
 
 import (
-	"fmt"
-	gosteamauth "github.com/TeddiO/GoSteamAuth/src"
-	"log"
+	"bytes"
+	"encoding/json"
 	"net/http"
 	"net/url"
+	"store/app/api"
 	"store/util"
+
+	gosteamauth "github.com/TeddiO/GoSteamAuth/src"
 )
 
 func SteamCallback(w http.ResponseWriter, r *http.Request) {
 	queryString, _ := url.ParseQuery(r.URL.RawQuery)
 	queryMap := gosteamauth.ValuesToMap(queryString)
-	steamID, isValid, err := gosteamauth.ValidateResponse(queryMap)
+	steamID, _, err := gosteamauth.ValidateResponse(queryMap)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	session, err := util.Store.Get(r, "id")
+	session, err := util.Store.Get(r, "session")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -26,11 +28,19 @@ func SteamCallback(w http.ResponseWriter, r *http.Request) {
 
 	session.Values["steamID"] = steamID
 
+	user := api.GetSteamProfile(steamID)
+	var buffer bytes.Buffer
+	err = json.NewEncoder(&buffer).Encode(user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	session.Values["user"] = buffer.String()
+
 	if err = session.Save(r, w); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	log.Printf("%s, %t", steamID, isValid)
-	http.Redirect(w, r, fmt.Sprintf("/"), http.StatusFound)
+	http.Redirect(w, r, "/", http.StatusFound)
 }

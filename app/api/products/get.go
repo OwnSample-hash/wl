@@ -10,8 +10,8 @@ import (
 	"store/util"
 )
 
-func GetRawProds() (prods []types.Product) {
-	rows, err := util.Db.Query("SELECT * FROM products")
+func GetRawProds(path string) (prods []types.Product) {
+	rows, err := util.Db.Query("SELECT * FROM store_products")
 	if errors.Is(err, sql.ErrNoRows) {
 		log.Fatal("No rows")
 		return
@@ -28,8 +28,18 @@ func GetRawProds() (prods []types.Product) {
 	prods = make([]types.Product, 0)
 	for rows.Next() {
 		prod := types.Product{}
-		if err := rows.Scan(&prod.ID, &prod.Name, &prod.Description, &prod.Price, &prod.OneMonth, &prod.LifeTime, &prod.CreatedAt, &prod.UpdatedAt); err != nil {
+		if err := rows.Scan(&prod.ID, &prod.Name, &prod.Description, &prod.PricePerMonth, &prod.Price, &prod.OneMonth, &prod.LifeTime, &prod.Discount, &prod.CreatedAt, &prod.UpdatedAt); err != nil {
 			log.Println(err)
+		}
+		prod.Path = path
+		prod.FormattedCreatedAt = prod.CreatedAt.Format("2006-01-02 15:04:05")
+		prod.FormattedUpdatedAt = prod.UpdatedAt.Format("2006-01-02 15:04:05")
+		if prod.Discount > 0 {
+			prod.DiscountPrice = prod.Price - (prod.Price * (prod.Discount / 100))
+			prod.DiscountedMonthlyPrice = prod.PricePerMonth - (prod.PricePerMonth * (prod.Discount / 100))
+		} else {
+			prod.DiscountPrice = prod.Price
+			prod.DiscountedMonthlyPrice = prod.PricePerMonth
 		}
 		prods = append(prods, prod)
 	}
@@ -37,10 +47,9 @@ func GetRawProds() (prods []types.Product) {
 }
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
-	prods := GetRawProds()
+	prods := GetRawProds(r.URL.Path)
 	w.Header().Set("Content-Type", "application/json")
 	if err := json.NewEncoder(w).Encode(prods); err != nil {
 		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 	}
-
 }

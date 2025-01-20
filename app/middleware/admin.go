@@ -8,14 +8,14 @@ import (
 
 func CheckAdmin(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		session, err := util.Store.Get(r, "id")
+		session, err := util.Store.Get(r, "session")
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		steamID, ok := session.Values["steamID"].(string)
 		if !ok {
-			http.Error(w, "Unauthorized session not ok", http.StatusUnauthorized)
+			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 			return
 		}
 		i, err := strconv.ParseInt(steamID, 10, 64)
@@ -29,6 +29,6 @@ func CheckAdmin(next http.Handler) http.Handler {
 				return
 			}
 		}
-		http.Error(w, "Unauthorized after loop", http.StatusUnauthorized)
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 	})
 }

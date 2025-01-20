@@ -1,13 +1,12 @@
 package auth
 
 import (
-	"fmt"
 	"net/http"
 	"store/util"
 )
 
 func LogOut(w http.ResponseWriter, r *http.Request) {
-	session, err := util.Store.Get(r, "id")
+	session, err := util.Store.Get(r, "session")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -19,5 +18,5 @@ func LogOut(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.Redirect(w, r, fmt.Sprintf("/"), http.StatusFound)
+	http.Redirect(w, r, "/", http.StatusFound)
 }
