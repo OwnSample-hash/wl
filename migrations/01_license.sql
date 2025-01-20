@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `license` (
+CREATE TABLE IF NOT EXISTS `store_licenses` (
   `id` int NOT NULL AUTO_INCREMENT,
   `uuid` UUID NOT NULL,
   `name` varchar(255) NOT NULL,

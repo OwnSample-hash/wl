@@ -14,7 +14,7 @@ func Hash(s string) string {
 	return fmt.Sprintf("%x", sha256.Sum256([]byte(s)))
 }
 
-func Migrate(path string) {
+func Migrate(path string, down bool) {
 	cfg, err := GetConfig(path)
 	if err != nil {
 		log.Fatal(err)
@@ -22,6 +22,21 @@ func Migrate(path string) {
 	err = InitDb(cfg.Db)
 	if err != nil {
 		panic(err)
+	}
+	if down {
+		for i := len(cfg.Migrations) - 1; i >= 0; i-- {
+			m := cfg.Migrations[i]
+			log.Printf("Downning %-15sfrom %s\n", m.DBName, m.Path)
+			_, err := Db.Exec("DROP TABLE IF EXISTS " + m.DBName)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+		cfg.Migrations = []config.Migration{}
+		if err := DumpConfig(path, cfg); err != nil {
+			log.Fatal(err)
+		}
+		return
 	}
 	err = filepath.Walk("migrations", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
@@ -35,8 +50,7 @@ func Migrate(path string) {
 		if err != nil {
 			return err
 		}
-		var index int
-		index = -1
+		index := -1
 		for i, m := range cfg.Migrations {
 			if m.Path == path {
 				if m.Hash == Hash(string(file)) {
@@ -48,14 +62,17 @@ func Migrate(path string) {
 				}
 			}
 		}
-		if index != -1 {
+		if index == -1 {
 			_, err = Db.Exec(string(file))
 			if err != nil {
 				return err
 			}
+			firstLine := strings.Split(string(file), "\n")[0]
+			dbName := strings.Split(firstLine, "`")[1]
 			cfg.Migrations = append(cfg.Migrations, config.Migration{
-				Path: path,
-				Hash: Hash(string(file)),
+				Path:   path,
+				Hash:   Hash(string(file)),
+				DBName: strings.Split(dbName, "`")[0],
 			})
 		} else {
 			firstLine := strings.Split(string(file), "\n")[0]
@@ -66,15 +83,11 @@ func Migrate(path string) {
 			if err != nil {
 				return err
 			}
-
 			_, err = Db.Exec(string(file))
 			if err != nil {
 				return err
 			}
-			cfg.Migrations = append(cfg.Migrations, config.Migration{
-				Path: path,
-				Hash: Hash(string(file)),
-			})
+			cfg.Migrations[index].Hash = Hash(string(file))
 		}
 		return nil
 	})
