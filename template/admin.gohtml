@@ -15,8 +15,8 @@
 
 <body>
   {{template "header" .}}
-  <div class="flex">
-    <form action="/admin/products" id="new_prod" class="w-1/3">
+  <div class="flex flex-wrap px-4">
+    <form action="/admin/products" id="new_prod" class="w-full md:w-1/3 py-2 md:py2">
       {{ .CsrfField }}
       <div class="flex items-center mb-6">
         <div class="w-1/3"></div>
@@ -45,8 +45,8 @@
           <input name="one_month" class="mr-2 leading-tight" type="checkbox" id="one_month" />
           <span class="text-sm">Monthly</span>
         </label>
-        <div class="w-1/3"></div>
-        <label class="w-1/3 block text-gray-100 font-bold" for="life_time">
+        <div class="md:w-1/3"></div>
+        <label class="w-1/2 block text-gray-100 font-bold" for="life_time">
           <input name="life_time" class="mr-2 leading-tight" type="checkbox" id="life_time" />
           <span class="text-sm">Life Time</span>
         </label>
@@ -80,7 +80,7 @@
         <button class="purple-btn" type="submit" formmethod="post" id="submit-prod">Add</button>
       </div>
     </form>
-    <form action="/admin/cupone" id="new_cupone" class="w-1/3">
+    <form action="/admin/cupone" id="new_cupone" class="w-full md:w-1/3 py-2 md:py-2">
       <div class="flex items-center mb-6">
         <div class="w-1/3"></div>
         <span class="text-gray-100 font-bold w-2/3">Add Cupone</span>
@@ -124,13 +124,12 @@
         </button>
       </div>
     </form>
-    <div class="w-1/3">
+    <div class="w-full md:w-1/3 py-2 md:py-2">
       <div class="flex items-center mb-6">
         <div class="w-1/3"></div>
         <span class="text-gray-100 font-bold w-2/3">Latest Orders</span>
       </div>
     </div>
-
   </div>
   {{if .Prods}}
   <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-1 mb-2 md:grid-cols-4">

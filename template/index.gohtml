@@ -17,20 +17,34 @@
 <body>
   {{template "header" .}}
   {{if .Prods}}
-  <script>
-    function showPrice(place, kind, monthly, lifeTime) {
-      if (kind == "one_month") {
-        place.html("€" + monthly + " monthly");
-      } else {
-        place.html("€" + lifeTime + " for lifetime");
-      }
-    }
-  </script>
   <div class="grid grid-flow-row-dense md:grid-cols-4 md:grid-rows-1 md:mb-2 grid-cols-1 grid-rows-1">
     {{range .Prods}}
-      {{template "card" .}}
+    {{template "card" .}}
     {{ end }}
   </div>
+  <script>
+    function showPrice(id, type, pricePerMonth, price, discount, discountPrice, discountPerMonth) {
+      console.log(id, type, pricePerMonth, price, discount, discountPrice, discountPerMonth);
+      if (Number(discount) > 0) {
+        if (type === 'one_month') {
+          $("#price-discount-" + id).html(pricePerMonth);
+          $("#price-discounted-" + id).html(discountPerMonth);
+        } else {
+          $("#price-discount-" + id).html(price);
+          $("#price-discounted-" + id).html(discountPrice);
+        }
+      } else {
+        if (type === 'one_month') {
+          $("#price-" + id).html(pricePerMonth);
+        } else {
+          $("#price-" + id).html(price);
+        }
+      }
+    }
+    for (let i = 1; i < Number("{{len .Prods}}")+1; i++) {
+      $('#length-' + i)[0].onchange();
+    }
+  </script>
   {{else}}
   <div class="flex justify-center md:py-4 md:px-4">
     <div class="bg-gray-200 border-l-4 border-orange-500 text-orange-700 p-4 justify-center" role="alert">

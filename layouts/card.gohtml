@@ -9,47 +9,18 @@
     </div>
     <div>
       <div>
-        <h5 class="text-lg font-bold">Price: €</h5>
+        <h5 class="text-lg font-bold">Price: </h5>
       </div>
       <div>
         {{if .Discount}}
         <div class="flex items-center space-x-2">
-          <div class="line-through text-gray-500" data-tooltip-target="tooltip-bottom-{{.ID}}"
-            data-tooltip-placement="bottom">
-            {{if .PricePerMonth}}{{.PricePerMonth}}{{ end}}
-            {{if and .PricePerMonth .Price}} / {{ end }}
-            {{if .Price}}{{.Price}}{{ end }}
+          <div class="line-through text-gray-500" id="price-discount-{{.ID}}" >
           </div>
-          <div class="text-green-500" data-tooltip-target="tooltip-bottom-{{.ID}}" data-tooltip-placement="bottom">
-            {{if .DiscountedMonthlyPrice}}{{.DiscountedMonthlyPrice}}{{ end }}
-            {{if and .DiscountedMonthlyPrice .DiscountPrice}} / {{ end }}
-            {{if .DiscountPrice}}{{.DiscountPrice}}{{ end }}
+          <div class="text-green-500" id="price-discounted-{{.ID}}">
           </div>
-        </div>
-        <div id="tooltip-bottom-{{.ID}}" role="tooltip"
-          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-          <div>
-            {{if .PricePerMonth}}Monthly{{ end}}
-            {{if and .PricePerMonth .Price}} / {{ end }}
-            {{if .Price}}Lifetime{{ end }}
-          </div>
-            <div class="text-green-500">
-              Discount: {{.Discount}}%
-            </div>
-          <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
         {{else}}
-        <a data-tooltip-target="tooltip-bottom-{{.ID}}" data-tooltip-placement="bottom" type="button">
-          {{if .PricePerMonth}}{{.PricePerMonth}}{{ end}}
-          {{if and .PricePerMonth .Price}} / {{ end }}
-          {{if .Price}}{{.Price}}{{ end }}
-        </a>
-        <div id="tooltip-bottom-{{.ID}}" role="tooltip"
-          class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-          {{if .PricePerMonth}}Monthly{{ end}}
-          {{if and .PricePerMonth .Price}} / {{ end }}
-          {{if .Price}}Lifetime{{ end }}
-          <div class="tooltip-arrow" data-popper-arrow></div>
+        <div id="price-{{.ID}}">
         </div>
         {{end}}
       </div>
@@ -57,15 +28,15 @@
   </div>
   <div class="flex items-end justify-between px-4">
     <div>
-      <label for="lenght{{.ID}}"></label>
-      <select name="lenght-{{.ID}}" id="lenght " class="select lenght-{{.ID}}">
+      <label for="length-{{.ID}}"></label>
+      <select name="length-{{.ID}}" id="length-{{.ID}}" class="select" onchange="showPrice('{{.ID}}', $('#length-{{.ID}}').val(), '{{.PricePerMonth}}', '{{.Price}}', '{{.Discount}}', '{{.DiscountPrice}}', '{{.DiscountedMonthlyPrice}}')">
         {{if .OneMonth}}<option value="one_month">One Month</option>{{end}}
-        {{if .LifeTime}}<option value="life_time">Life Time</option>{{end}}
+        {{if .LifeTime}}<option value="lifetime">Life Time</option>{{end}}
       </select>
     </div>
     {{if eq .Path "/"}}
     <button type="button" class="green-btn" data-modal-target="modal-{{.ID}}" data-modal-toggle="modal-{{.ID}}"
-      onclick="showPrice($('#modal-{{.ID}}-price'), $('.lenght-{{.ID}}').val(), '{{.PricePerMonth}}', '{{.Price}}')">
+      onclick="showPrice($('#modal-{{.ID}}-price'), $('.length-{{.ID}}').val(), '{{.PricePerMonth}}', '{{.Price}}')">
       <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M18.5996 21.57C19.7042 21.57 20.5996 20.6746 20.5996 19.57C20.5996 18.4654 19.7042 17.57 18.5996 17.57C17.495 17.57 16.5996 18.4654 16.5996 19.57C16.5996 20.6746 17.495 21.57 18.5996 21.57Z"
