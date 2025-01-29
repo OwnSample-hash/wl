@@ -11,5 +11,6 @@ type Payload struct {
 	Path      string
 	User      SteamUser
 	Prods     []Product
+	Coupons   []Coupon
 	CsrfField template.HTML
 }

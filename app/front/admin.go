@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"store/app/api"
+	"store/app/api/coupons"
 	"store/app/api/products"
 	"store/types"
 	"store/util"
@@ -31,6 +32,7 @@ func AdminHandler(w http.ResponseWriter, r *http.Request) {
 		Title:     "Admin",
 		SteamID:   steamID,
 		Prods:     products.GetRawProds(r.URL.Path),
+		Coupons:   coupons.GetRawProds(),
 		Path:      r.URL.Path,
 		User:      api.GetSteamProfile(steamID),
 		IsAdmin:   true,

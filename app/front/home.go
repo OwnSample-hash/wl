@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"net/http"
 	"store/app/api"
+	"store/app/api/coupons"
 	"store/app/api/products"
 	"store/types"
 	"store/util"
@@ -60,6 +61,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			Path:    r.URL.Path,
 			User:    User,
 			Prods:   products.GetRawProds(r.URL.Path),
+			Coupons: coupons.GetRawProds(),
 		}
 	} else {
 		data = types.Payload{
@@ -69,6 +71,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			Path:    r.URL.Path,
 			User:    User,
 			Prods:   products.GetRawProds(r.URL.Path),
+			Coupons: coupons.GetRawProds(),
 		}
 	}
 
