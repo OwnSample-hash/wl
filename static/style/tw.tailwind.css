@@ -1,4 +1,41 @@
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
+/* @import "tailwindcss/preflight"; */
 @tailwind utilities;
+@plugin "flowbite/plugin";
+@source "../../node_modules/flowbite";
 
+.time {
+  @apply inline-block bg-gray-500 rounded-full px-3 py-1 text-sm font-semibold text-slate-200 mr-2 mb-2;
+}
+
+.select {
+  @apply block w-full bg-gray-200 text-slate-900 py-2 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500;
+}
+
+.green-btn {
+  @apply bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none;
+}
+
+.purple-btn {
+  @apply shadow bg-purple-500 hover:bg-purple-400 focus:outline-none text-white font-bold py-2 px-4 rounded w-24;
+}
+
+.gray-txt {
+  @apply text-gray-100 font-bold md:text-right mb-1 md:mb-0 pr-4 block;
+}
+
+.input {
+  @apply border text-sm rounded-lg block w-full ps-10 p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500;
+}
+
+body {
+  @apply bg-gray-900 text-white flex flex-col justify-between h-screen;
+}
+
+.red-btn {
+  @apply bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none;
+}
+
+.blue-btn {
+  @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none;
+}
