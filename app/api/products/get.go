@@ -25,6 +25,7 @@ func GetRawProds(path string) (prods []types.Product) {
 			panic(err)
 		}
 	}(rows)
+
 	prods = make([]types.Product, 0)
 	for rows.Next() {
 		prod := types.Product{}
@@ -47,9 +48,8 @@ func GetRawProds(path string) (prods []types.Product) {
 }
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
-	prods := GetRawProds(r.URL.Path)
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(prods); err != nil {
+	if err := json.NewEncoder(w).Encode(GetRawProds(r.URL.Path)); err != nil {
 		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 	}
 }
