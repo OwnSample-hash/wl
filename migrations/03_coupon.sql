@@ -1,8 +1,8 @@
-CREATE TABLE IF NOT EXISTS `store_cupones` (
+CREATE TABLE IF NOT EXISTS `store_coupons` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(255) NOT NULL,
   `discount` DECIMAL(10,2) NOT NULL,
-  `exp` DATE NOT NULL,
+  `exp` TIMESTAMP NOT NULL,
   `status` ENUM('active', 'inactive') NOT NULL DEFAULT 'active',
   `remaining` INT NOT NULL,
   `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
