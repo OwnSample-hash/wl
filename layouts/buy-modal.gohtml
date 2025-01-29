@@ -26,8 +26,14 @@ class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 
     </div>
     <div class="py-2 px-4">
       <p class="font-bold">Price:</p>
-      <div id="modal-{{.ID}}-price" class="px-4">
+      {{if .Discount}}
+      <div class="flex items-center space-x-2">
+        <div class="line-through text-gray-500" id="price-modal-discount-{{.ID}}" ></div>
+        <div class="text-green-500" id="price-modal-discounted-{{.ID}}"></div>
       </div>
+      {{else}}
+        <div id="price-modal-{{.ID}}"></div>
+      {{end}}
     </div>
     <form class="p-4 md:p-5">
       <label for="name" class="block mb-2 text-gray-900 font-bold">Coupon</label>

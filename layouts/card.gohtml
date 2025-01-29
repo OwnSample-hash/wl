@@ -1,6 +1,6 @@
 {{define "card"}}
 <div class="max-w-sm mt-4 rounded shadow-lg bg-gray-800 ml-auto mr-auto px-4">
-  <img class="w-full pt-4 rounded-xl" src="/static/img/{{.ID}}.jpg" alt="Use /static/img/{{.ID}}.jpg" />
+  <img class="w-full mt-4 rounded-xl" src="/static/img/{{.ID}}.jpg" alt="Use /static/img/{{.ID}}.jpg" />
   <div class="px-4 py-4">
     <div class="font-bold text-xl mb-2">{{.Name}}</div>
     <div class="text-white text-base">
@@ -35,8 +35,7 @@
       </select>
     </div>
     {{if eq .Path "/"}}
-    <button type="button" class="green-btn" data-modal-target="modal-{{.ID}}" data-modal-toggle="modal-{{.ID}}"
-      onclick="showPrice($('#modal-{{.ID}}-price'), $('.length-{{.ID}}').val(), '{{.PricePerMonth}}', '{{.Price}}')">
+    <button type="button" class="green-btn" data-modal-target="modal-{{.ID}}" data-modal-toggle="modal-{{.ID}}">
       <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M18.5996 21.57C19.7042 21.57 20.5996 20.6746 20.5996 19.57C20.5996 18.4654 19.7042 17.57 18.5996 17.57C17.495 17.57 16.5996 18.4654 16.5996 19.57C16.5996 20.6746 17.495 21.57 18.5996 21.57Z"
@@ -53,8 +52,8 @@
     {{end}}
     {{if eq .Path "/admin/"}}
     <button type="button"
-      class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-      onclick="$.ajax({method: 'DELETE', url: '/admin/products/{{.ID}}', success: function(){location.reload()}, error: function(err){alert(err)}})">
+      class="red-btn"
+      onclick="$.ajax({method: 'DELETE', url: '/admin/products/{{.ID}}', success: function(){location.reload()}, error: function(xhr){console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);alert('check console for error')}})">
       <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 6.98996C8.81444 4.87965 15.1856 4.87965 21 6.98996" stroke="#ffffff" stroke-width="1.5"
           stroke-linecap="round" stroke-linejoin="round" />
@@ -68,7 +67,7 @@
       </svg>
     </button>
     <button type="button"
-      class="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      class="blue-btn"
       onclick="editThis('{{.ID}}', '{{.Name}}', '{{.Description}}', '{{.OneMonth}}', '{{.LifeTime}}', '{{.PricePerMonth}}', '{{.Price}}', '{{.Discount}}')">
       <svg width="24" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path

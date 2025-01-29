@@ -7,16 +7,16 @@
   <title>Admin of our shit</title>
   <title>{{.Title}}</title>
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico" />
-
   <link href="/static/style/dist/store.css" rel="stylesheet" />
-  <link href="/static/style/dist/utils.css" rel="stylesheet" />
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"
+    integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f"></script>
+  <script src="/static/js/utils.js"></script>
 </head>
 
 <body>
   {{template "header" .}}
   <div class="flex flex-wrap px-4">
-    <form action="/admin/products" id="new_prod" class="w-full md:w-1/3 py-2 md:py2">
+    <form action="/admin/products" id="new_prod" class="w-full md:w-1/3 py-2 md:py-4">
       {{ .CsrfField }}
       <div class="flex items-center mb-6">
         <div class="w-1/3"></div>
@@ -41,22 +41,21 @@
       <div class="flex items-center mb-6">
         <div class="w-1/3"></div>
         <div class="w-1/3"></div>
-        <label class="w-2/3 block text-gray-100 font-bold" for="one_month">
-          <input name="one_month" class="mr-2 leading-tight" type="checkbox" id="one_month" />
-          <span class="text-sm">Monthly</span>
-        </label>
-        <div class="md:w-1/3"></div>
-        <label class="w-1/2 block text-gray-100 font-bold" for="life_time">
-          <input name="life_time" class="mr-2 leading-tight" type="checkbox" id="life_time" />
-          <span class="text-sm">Life Time</span>
-        </label>
+        <div class="flex items-center mb-4 w-2/3">
+          <input id="one_month" name="one_month" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <label for="one_month" class="ms-2 font-bold">Monthly</label>
+        </div>
+        <div class="flex items-center mb-4 w-2/3">
+          <input id="life_time" name="life_time" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <label for="life_time" class="ms-2 font-bold">Lifetime</label>
+      </div>
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
           <label class="gray-txt" for="price_per_month">Monthly</label>
         </div>
         <div class="w-2/3">
-          <input name="price_per_month" class="input" id="price_per_month" type="number" placeholder="15" value="0" />
+          <input name="price_per_month" class="input" id="price_per_month" type="text" inputmode="numeric" pattern="\d*" placeholder="15" value="0" />
         </div>
       </div>
       <div class="flex items-center mb-6">
@@ -64,7 +63,7 @@
           <label class="gray-txt" for="price">Life time</label>
         </div>
         <div class="w-2/3">
-          <input name="price" class="input" id="price" type="number" placeholder="169" value="0" />
+          <input name="price" class="input" id="price" type="text" inputmode="numeric" pattern="\d*" placeholder="169" value="0" />
         </div>
       </div>
       <div class="flex items-center mb-6">
@@ -72,7 +71,7 @@
           <label for="discount" class="gray-txt">Discount in %</label>
         </div>
         <div class="w-2/3">
-          <input name="discount" type="number" class="input" id="discount" placeholder="15" value="0" />
+          <input name="discount" type="text" inputmode="numeric" pattern="\d*" class="input" id="discount" placeholder="15" value="0" />
         </div>
       </div>
       <div class="flex items-center">
@@ -80,66 +79,100 @@
         <button class="purple-btn" type="submit" formmethod="post" id="submit-prod">Add</button>
       </div>
     </form>
-    <form action="/admin/cupone" id="new_cupone" class="w-full md:w-1/3 py-2 md:py-2">
+    <form action="/admin/coupon" id="new_cupone" class="w-full md:w-1/2 py-2 md:py-4">
+      {{ .CsrfField }}
       <div class="flex items-center mb-6">
         <div class="w-1/3"></div>
         <span class="text-gray-100 font-bold w-2/3">Add Cupone</span>
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
-          <label class="gray-txt" for="name">Name</label>
+          <label class="gray-txt" for="code">Code</label>
         </div>
         <div class="w-2/3">
-          <input name="name" class="input" id="name" type="text" placeholder="Name" />
+          <input name="code" class="input" id="code" type="text" placeholder="Code" />
         </div>
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
-          <label class="gray-txt" for="price_per_month">Uses</label>
+          <label class="gray-txt" for="uses">Uses</label>
         </div>
         <div class="w-2/3">
-          <input name="price_per_month" class="input" id="price_per_month" type="number" placeholder="15" />
+          <input name="uses" class="input" id="uses" type="text" inputmode="numeric" pattern="\d*" placeholder="15" />
         </div>
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
-          <label class="gray-txt" for="price_per_month">Off</label>
+          <label class="gray-txt" for="discount">Discount</label>
         </div>
         <div class="w-2/3">
-          <input name="price_per_month" class="input" id="price_per_month" type="number" placeholder="15" />
+          <input name="discount" class="input" id="discount" type="text" inputmode="numeric" pattern="\d*" placeholder="15" />
         </div>
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
-          <label class="gray-txt" for="price_per_month">Till</label>
+          <label class="gray-txt" for="till">Expires at</label>
         </div>
-        <div class="w-2/3">
-          <input name="price_per_month" class="input" id="price_per_month" type="datetime-local" placeholder="15" />
+        <div class="relative w-2/3">
+          <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor" viewBox="0 0 20 20">
+              <path
+                d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
+            </svg>
+          </div>
+          <input datepicker id="expires_at" type="text" name="expires_at" datepicker-format="yyyy-mm-dd"
+            class="input"
+            placeholder="Select date">
+        </div>
+      </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/2"></div>
+        <div class="flex items-center w-1/3">
+          <input checked id="active" type="radio" value="" name="default-radio"
+            class="w-4 h-4 text-blue-600  focus:ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600">
+          <label for="active" class="ms-2 font-bold  ">Active</label>
+        </div>
+        <div class="flex items-center w-1/3">
+          <input  id="inactive" type="radio" value="" name="default-radio"
+            class="w-4 h-4 text-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600">
+          <label for="inactive" class="ms-2 font-bold">Inactive</label>
         </div>
       </div>
       <div class="flex items-center">
-        <div class="w-1/2"></div>
-        <button class="purple-btn" type="submit" formmethod="post">
+        <div class="w-1/3"></div>
+        <div class="w-1/4"></div>
+        <button class="purple-btn" type="submit" formmethod="post" id="submit-coupon">
           Add
         </button>
       </div>
     </form>
-    <div class="w-full md:w-1/3 py-2 md:py-2">
-      <div class="flex items-center mb-6">
-        <div class="w-1/3"></div>
-        <span class="text-gray-100 font-bold w-2/3">Latest Orders</span>
-      </div>
+  </div>
+  {{if .Coupons}}
+  {{template "coupons" .}}
+  {{else}}
+  <div class="flex justify-center py-4 px-4">
+    <div class="bg-gray-200 border-l-4 border-orange-500 text-orange-700 p-4 justify-center" role="alert">
+      <p class="font-bold">Be Warned</p>
+      <p>No Coupons.</p>
     </div>
   </div>
+  {{end}}
   {{if .Prods}}
   <div class="grid grid-flow-row-dense grid-cols-1 grid-rows-1 mb-2 md:grid-cols-4">
+    {{range .Prods }}
+    {{template "card" .}}
+    {{ end }}
     <script>
+      for (let i = 1; i < Number("{{len .Prods}}") + 1; i++) {
+        $('#length-' + i)[0].onchange();
+      }
       function sendPut(id) {
         $.ajax({
           method: "PUT",
           url: "/admin/products/" + id,
           headers: {
-            "X-CSRF-Token": ((token) => {return $($.parseXML(token)).find("input").attr("value");}) ("{{.CsrfField}}</input>")
+            "X-CSRF-Token": ((token) => { return $($.parseXML(token)).find("input").attr("value"); })("{{.CsrfField}}</input>")
           },
           data: {
             name: $("#name").val(),
@@ -170,10 +203,9 @@
         $("#discount").val(discount);
         $("#submit-prod").attr("onclick", "sendPut('" + id + "')");
       }
+      document.documentElement.classList.add("dark");
+      localStorage.setItem('color-theme', 'dark');
     </script>
-    {{range .Prods }}
-      {{template "card" .}}
-    {{ end }}
   </div>
   {{else}}
   <div class="flex justify-center h-screen py-4 px-4">
@@ -184,7 +216,7 @@
   </div>
   {{ end }}
   {{template "footer" .}}
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  <script src="/flowbite.min.js"></script>
 </body>
 
 </html>

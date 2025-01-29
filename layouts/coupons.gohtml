@@ -1,0 +1,73 @@
+{{define "coupons"}}
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg my-8 mx-auto w-[95%]">
+  <script>
+    function editCoupon(id, code, uses, discount, expires_at) {
+        $("#submit-coupon").html("Edit");
+        $("#submit-coupon").attr("type", "button");
+        $("#code").val(code);
+        $("#uses").val(uses);
+        $("#discount").val(discount);
+        $("#expires_at").val(expires_at);
+        $("#submit-coupon").attr("onclick", "sendPutCoupon('" + id + "')");
+      }
+  </script>
+  <table class="table-auto w-full">
+    <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr class="py-6">
+        <th class="pb-4">ID</th>
+        <th class="pb-4">Code</th>
+        <th class="pb-4">Discount</th>
+        <th class="pb-4">Status</th>
+        <th class="pb-4">Remaining</th>
+        <th class="pb-4">Expires At</th>
+        <th class="pb-4">Created At</th>
+        <th class="pb-4">Updated At</th>
+        <th class="pb-4">Edit</th>
+        <th class="pb-4">Delete</th>
+      </tr>
+    </thead>
+    <tbody class="text-center my-6">
+      {{range .Coupons}}
+      <tr class="odd:bg-gray-900 even:bg-gray-800 border-b dark:border-gray-700 hover:bg-gray-700">
+        <td>{{.ID}}</td>
+        <td>{{.Code}}</td>
+        <td>{{.Discount}}</td>
+        <td>{{.Status}}</td>
+        <td>{{.Remaining}}</td>
+        <td>{{.FormattedExpiresAt}}</td>
+        <td>{{.FormattedCreatedAt}}</td>
+        <td>{{.FormattedUpdatedAt}}</td>
+        <td>
+          <button href="/admin/coupon/{{.ID}}/edit" class="blue-btn my-2" onclick="editCoupon('{{.ID}}', '{{.Code}}', '{{.Discount}}', '{{.ExpiresAt}}')">
+            <svg width="24" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M20.1498 7.93997L8.27978 19.81C7.21978 20.88 4.04977 21.3699 3.32977 20.6599C2.60977 19.9499 3.11978 16.78 4.17978 15.71L16.0498 3.84C16.5979 3.31801 17.3283 3.03097 18.0851 3.04019C18.842 3.04942 19.5652 3.35418 20.1004 3.88938C20.6356 4.42457 20.9403 5.14781 20.9496 5.90463C20.9588 6.66146 20.6718 7.39189 20.1498 7.93997V7.93997Z"
+                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </button>
+        </td>
+        <td>
+          <form action="/admin/coupon/{{.ID}}" method="post">
+            <input type="hidden" name="_method" value="delete" />
+            <button class="red-btn" type="submit"><svg width="24px" height="24px" viewBox="0 0 24 24" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6.98996C8.81444 4.87965 15.1856 4.87965 21 6.98996" stroke="#ffffff" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+                <path
+                  d="M8.00977 5.71997C8.00977 4.6591 8.43119 3.64175 9.18134 2.8916C9.93148 2.14146 10.9489 1.71997 12.0098 1.71997C13.0706 1.71997 14.0881 2.14146 14.8382 2.8916C15.5883 3.64175 16.0098 4.6591 16.0098 5.71997"
+                  stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M12 13V18" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M19 9.98999L18.33 17.99C18.2225 19.071 17.7225 20.0751 16.9246 20.8123C16.1266 21.5494 15.0861 21.9684 14 21.99H10C8.91389 21.9684 7.87336 21.5494 7.07541 20.8123C6.27745 20.0751 5.77745 19.071 5.67001 17.99L5 9.98999"
+                  stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </form>
+        </td>
+      </tr>
+      {{end}}
+    </tbody>
+  </table>
+</div>
+{{end}}
