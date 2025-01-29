@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/signal"
+	"store/app/api/coupons"
 	"store/app/api/products"
 	"store/app/middleware"
 	"store/types/cfg"
@@ -20,6 +21,7 @@ import (
 	"github.com/gorilla/securecookie"
 
 	"store/app/api/auth"
+	"store/app/api/payments"
 	"store/app/front"
 )
 
@@ -98,6 +100,14 @@ func main() {
 		http.ServeFile(w, r, "static/img/favicon.ico")
 	})
 
+	r.HandleFunc("/flowbite.min.js", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./node_modules/flowbite/dist/flowbite.min.js")
+	})
+
+	r.HandleFunc("/flowbite.min.js.map", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "./node_modules/flowbite/dist/flowbite.min.js.map")
+	})
+
 	CSRF := csrf.Protect(securecookie.GenerateRandomKey(32), csrf.Secure(false))
 	r.Use(CSRF)
 
@@ -106,11 +116,12 @@ func main() {
 	r.Use(middleware.LogRequest)
 
 	ApiRouter := r.PathPrefix("/api").Subrouter()
-
 	ApiRouter.HandleFunc("/products", products.GetProducts).Methods("GET")
 	ApiRouter.HandleFunc("/auth", auth.SteamAuth).Methods("GET")
 	ApiRouter.HandleFunc("/auth/logout", auth.LogOut).Methods("GET")
 	ApiRouter.HandleFunc("/auth/callback", auth.SteamCallback).Methods("GET")
+	ApiRouter.HandleFunc("pay", payments.PaymentGlobalHandler).Methods("POST")
+	ApiRouter.HandleFunc("coupon", coupons.Get).Methods("GET")
 
 	AdminRouter := r.PathPrefix("/admin").Subrouter()
 	AdminRouter.Use(middleware.CheckAdmin)
@@ -118,6 +129,8 @@ func main() {
 	AdminRouter.HandleFunc("/products", products.Add).Methods("POST")
 	AdminRouter.HandleFunc("/products/{id}", products.Delete).Methods("DELETE")
 	AdminRouter.HandleFunc("/products/{id}", products.Patch).Methods("PUT")
+	AdminRouter.HandleFunc("/coupon", coupons.Add).Methods("POST")
+	AdminRouter.HandleFunc("/coupon/{id}", coupons.Delete).Methods("DELETE")
 
 	http.Handle("/", r)
 	srv := &http.Server{
