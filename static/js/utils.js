@@ -21,3 +21,5 @@ function showPrice(id, type, pricePerMonth, price, discount, discountPrice, disc
     }
   }
 }
+document.documentElement.classList.add("dark");
+localStorage.setItem('color-theme', 'dark');
