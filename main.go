@@ -131,6 +131,7 @@ func main() {
 	AdminRouter.HandleFunc("/products/{id}", products.Patch).Methods("PUT")
 	AdminRouter.HandleFunc("/coupon", coupons.Add).Methods("POST")
 	AdminRouter.HandleFunc("/coupon/{id}", coupons.Delete).Methods("DELETE")
+	AdminRouter.HandleFunc("/coupon/{id}", coupons.Put).Methods("PUT")
 
 	http.Handle("/", r)
 	srv := &http.Server{

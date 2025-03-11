@@ -39,11 +39,6 @@ func GetRawProds() (coupons []types.Coupon) {
 		coupons = append(coupons, coupon)
 	}
 
-	if errors.Is(err, sql.ErrNoRows) {
-		panic(err)
-	} else if err != nil {
-		panic(err)
-	}
 	return coupons
 }
 
