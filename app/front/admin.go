@@ -37,6 +37,7 @@ func AdminHandler(w http.ResponseWriter, r *http.Request) {
 		User:      api.GetSteamProfile(steamID),
 		IsAdmin:   true,
 		CsrfField: csrf.TemplateField(r),
+		CsrfToken: csrf.Token(r),
 	}
 	err = tmpl.Execute(w, data)
 
