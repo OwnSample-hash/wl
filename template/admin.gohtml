@@ -42,20 +42,23 @@
         <div class="w-1/3"></div>
         <div class="w-1/3"></div>
         <div class="flex items-center mb-4 w-2/3">
-          <input id="one_month" name="one_month" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <input id="one_month" name="one_month" type="checkbox" value=""
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
           <label for="one_month" class="ms-2 font-bold">Monthly</label>
         </div>
         <div class="flex items-center mb-4 w-2/3">
-          <input id="life_time" name="life_time" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+          <input id="life_time" name="life_time" type="checkbox" value=""
+            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
           <label for="life_time" class="ms-2 font-bold">Lifetime</label>
-      </div>
+        </div>
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
           <label class="gray-txt" for="price_per_month">Monthly</label>
         </div>
         <div class="w-2/3">
-          <input name="price_per_month" class="input" id="price_per_month" type="text" inputmode="numeric" pattern="\d*" placeholder="15" value="0" />
+          <input name="price_per_month" class="input" id="price_per_month" type="text" inputmode="numeric" pattern="\d*"
+            placeholder="15" value="0" />
         </div>
       </div>
       <div class="flex items-center mb-6">
@@ -63,7 +66,8 @@
           <label class="gray-txt" for="price">Life time</label>
         </div>
         <div class="w-2/3">
-          <input name="price" class="input" id="price" type="text" inputmode="numeric" pattern="\d*" placeholder="169" value="0" />
+          <input name="price" class="input" id="price" type="text" inputmode="numeric" pattern="\d*" placeholder="169"
+            value="0" />
         </div>
       </div>
       <div class="flex items-center mb-6">
@@ -71,7 +75,8 @@
           <label for="discount" class="gray-txt">Discount in %</label>
         </div>
         <div class="w-2/3">
-          <input name="discount" type="text" inputmode="numeric" pattern="\d*" class="input" id="discount" placeholder="15" value="0" />
+          <input name="discount" type="text" inputmode="numeric" pattern="\d*" class="input" id="discount"
+            placeholder="15" value="0" />
         </div>
       </div>
       <div class="flex items-center">
@@ -95,18 +100,11 @@
       </div>
       <div class="flex items-center mb-6">
         <div class="w-1/3">
-          <label class="gray-txt" for="uses">Uses</label>
-        </div>
-        <div class="w-2/3">
-          <input name="uses" class="input" id="uses" type="text" inputmode="numeric" pattern="\d*" placeholder="15" />
-        </div>
-      </div>
-      <div class="flex items-center mb-6">
-        <div class="w-1/3">
           <label class="gray-txt" for="discount">Discount</label>
         </div>
         <div class="w-2/3">
-          <input name="discount" class="input" id="discount" type="text" inputmode="numeric" pattern="\d*" placeholder="15" />
+          <input name="discount" class="input" id="discount-coupone" type="text" inputmode="numeric" pattern="\d*"
+            placeholder="15" />
         </div>
       </div>
       <div class="flex items-center mb-6">
@@ -115,30 +113,42 @@
         </div>
         <div class="relative w-2/3">
           <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-              fill="currentColor" viewBox="0 0 20 20">
+            <svg class="w-4 h-4 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+              viewBox="0 0 20 20">
               <path
                 d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
             </svg>
           </div>
-          <input datepicker id="expires_at" type="text" name="expires_at" datepicker-format="yyyy-mm-dd"
-            class="input"
+          <input datepicker id="expires_at" type="text" name="expires_at" datepicker-format="yyyy-mm-dd" class="input"
             placeholder="Select date">
         </div>
       </div>
       <div class="flex items-center mb-6">
-        <div class="w-1/2"></div>
-        <div class="flex items-center w-1/3">
-          <input checked id="active" type="radio" value="" name="default-radio"
-            class="w-4 h-4 text-blue-600  focus:ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600">
-          <label for="active" class="ms-2 font-bold  ">Active</label>
+        <div class="w-1/3 gray-txt">
+          <span>Status:</span>
         </div>
-        <div class="flex items-center w-1/3">
-          <input  id="inactive" type="radio" value="" name="default-radio"
+        <div class="w-2/3">
+          <div class="flex items-center w-1/3">
+            <input checked id="active" type="radio" value="" name="default-radio"
+            class="w-4 h-4 text-blue-600  focus:ring-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600">
+            <label for="active" class="ms-2 font-bold ">Active</label>
+          </div>
+          <div class="flex items-center w-1/3">
+            <input id="inactive" type="radio" value="" name="default-radio"
             class="w-4 h-4 text-blue-600 ring-offset-gray-800 focus:ring-2 bg-gray-700 border-gray-600">
-          <label for="inactive" class="ms-2 font-bold">Inactive</label>
+            <label for="inactive" class="ms-2 font-bold">Inactive</label>
+          </div>
         </div>
       </div>
+      <div class="flex items-center mb-6">
+        <div class="w-1/3">
+          <label class="gray-txt" for="uses">Uses</label>
+        </div>
+        <div class="w-2/3">
+          <input name="uses" class="input" id="uses" type="text" inputmode="numeric" pattern="\d*" placeholder="15" />
+        </div>
+      </div>
+
       <div class="flex items-center">
         <div class="w-1/3"></div>
         <div class="w-1/4"></div>
@@ -172,7 +182,7 @@
           method: "PUT",
           url: "/admin/products/" + id,
           headers: {
-            "X-CSRF-Token": ((token) => { return $($.parseXML(token)).find("input").attr("value"); })("{{.CsrfField}}</input>")
+            "X-CSRF-Token": "{{.CsrfToken}}"
           },
           data: {
             name: $("#name").val(),
@@ -186,8 +196,9 @@
           success: function () {
             location.reload();
           },
-          error: function (err) {
-            console.log(err);
+          error: function (xhr) {
+            console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
+            alert('check console for error')
           }
         });
       }
@@ -203,8 +214,6 @@
         $("#discount").val(discount);
         $("#submit-prod").attr("onclick", "sendPut('" + id + "')");
       }
-      document.documentElement.classList.add("dark");
-      localStorage.setItem('color-theme', 'dark');
     </script>
   </div>
   {{else}}
