@@ -27,7 +27,7 @@ func Migrate(path string, down bool) {
 		for i := len(cfg.Migrations) - 1; i >= 0; i-- {
 			m := cfg.Migrations[i]
 			log.Printf("Downning %-15sfrom %s\n", m.DBName, m.Path)
-			_, err := Db.Exec("DROP TABLE IF EXISTS " + m.DBName)
+			_, err := Db.Exec("DROP " + m.ObjectType + " IF EXISTS " + m.DBName)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -70,9 +70,10 @@ func Migrate(path string, down bool) {
 			firstLine := strings.Split(string(file), "\n")[0]
 			dbName := strings.Split(firstLine, "`")[1]
 			cfg.Migrations = append(cfg.Migrations, config.Migration{
-				Path:   path,
-				Hash:   Hash(string(file)),
-				DBName: strings.Split(dbName, "`")[0],
+				Path:       path,
+				Hash:       Hash(string(file)),
+				DBName:     strings.Split(dbName, "`")[0],
+				ObjectType: strings.ToUpper(strings.Split(firstLine, " ")[1]),
 			})
 		} else {
 			firstLine := strings.Split(string(file), "\n")[0]

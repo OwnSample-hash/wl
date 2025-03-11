@@ -13,4 +13,5 @@ type Payload struct {
 	Prods     []Product
 	Coupons   []Coupon
 	CsrfField template.HTML
+	CsrfToken string
 }
