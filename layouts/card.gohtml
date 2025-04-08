@@ -1,6 +1,6 @@
 {{define "card"}}
 <div class="max-w-sm mt-4 rounded shadow-lg bg-gray-800 ml-auto mr-auto px-4">
-  <img class="w-full mt-4 rounded-xl" src="/static/img/{{.ID}}.jpg" alt="Use /static/img/{{.ID}}.jpg" />
+  <img class="w-full mt-4 rounded-xl" src="/static/img/{{.Name}}.png" alt="Use /static/img/{{.Name}}.png" />
   <div class="px-4 py-4">
     <div class="font-bold text-xl mb-2">{{.Name}}</div>
     <div class="text-white text-base">
@@ -14,7 +14,7 @@
       <div>
         {{if .Discount}}
         <div class="flex items-center space-x-2">
-          <div class="line-through text-gray-500" id="price-discount-{{.ID}}" >
+          <div class="line-through text-gray-500" id="price-discount-{{.ID}}">
           </div>
           <div class="text-green-500" id="price-discounted-{{.ID}}">
           </div>
@@ -29,7 +29,8 @@
   <div class="flex items-end justify-between px-4">
     <div>
       <label for="length-{{.ID}}"></label>
-      <select name="length-{{.ID}}" id="length-{{.ID}}" class="select" onchange="showPrice('{{.ID}}', $('#length-{{.ID}}').val(), '{{.PricePerMonth}}', '{{.Price}}', '{{.Discount}}', '{{.DiscountPrice}}', '{{.DiscountedMonthlyPrice}}')">
+      <select name="length-{{.ID}}" id="length-{{.ID}}" class="select"
+        onchange="showPrice('{{.ID}}', $('#length-{{.ID}}').val(), '{{.PricePerMonth}}', '{{.Price}}', '{{.Discount}}', '{{.DiscountPrice}}', '{{.DiscountedMonthlyPrice}}')">
         {{if .OneMonth}}<option value="one_month">One Month</option>{{end}}
         {{if .LifeTime}}<option value="lifetime">Life Time</option>{{end}}
       </select>
@@ -51,9 +52,7 @@
     {{template "buy-modal" .}}
     {{end}}
     {{if eq .Path "/admin/"}}
-    <button type="button"
-      class="red-btn"
-      onclick="$.ajax({method: 'DELETE', url: '/admin/products/{{.ID}}', success: function(){location.reload()}, error: function(xhr){console.log('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);alert('check console for error')}})">
+    <button type="button" class="red-btn" onclick="deleteThis('{{.ID}}')">
       <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 6.98996C8.81444 4.87965 15.1856 4.87965 21 6.98996" stroke="#ffffff" stroke-width="1.5"
           stroke-linecap="round" stroke-linejoin="round" />
@@ -66,14 +65,43 @@
           stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
-    <button type="button"
-      class="blue-btn"
+    <button type="button" class="blue-btn"
       onclick="editThis('{{.ID}}', '{{.Name}}', '{{.Description}}', '{{.OneMonth}}', '{{.LifeTime}}', '{{.PricePerMonth}}', '{{.Price}}', '{{.Discount}}')">
       <svg width="24" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M20.1498 7.93997L8.27978 19.81C7.21978 20.88 4.04977 21.3699 3.32977 20.6599C2.60977 19.9499 3.11978 16.78 4.17978 15.71L16.0498 3.84C16.5979 3.31801 17.3283 3.03097 18.0851 3.04019C18.842 3.04942 19.5652 3.35418 20.1004 3.88938C20.6356 4.42457 20.9403 5.14781 20.9496 5.90463C20.9588 6.66146 20.6718 7.39189 20.1498 7.93997V7.93997Z"
           stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
       </svg>
+    </button>
+    <button type="button" class="green-btn" onclick="flipThis('{{.ID}}')">
+      {{if .IsActive}}
+      <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M14.83 9.17999C14.2706 8.61995 13.5576 8.23846 12.7813 8.08386C12.0049 7.92926 11.2002 8.00851 10.4689 8.31152C9.73758 8.61453 9.11264 9.12769 8.67316 9.78607C8.23367 10.4444 7.99938 11.2184 8 12.01C7.99916 13.0663 8.41619 14.08 9.16004 14.83"
+          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M12 16.01C13.0609 16.01 14.0783 15.5886 14.8284 14.8384C15.5786 14.0883 16 13.0709 16 12.01"
+          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M17.61 6.39004L6.38 17.62C4.6208 15.9966 3.14099 14.0944 2 11.99C6.71 3.76002 12.44 1.89004 17.61 6.39004Z"
+          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M20.9994 3L17.6094 6.39" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+        <path d="M6.38 17.62L3 21" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path
+          d="M19.5695 8.42999C20.4801 9.55186 21.2931 10.7496 21.9995 12.01C17.9995 19.01 13.2695 21.4 8.76953 19.23"
+          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      {{else}}
+      <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M12 16.01C14.2091 16.01 16 14.2191 16 12.01C16 9.80087 14.2091 8.01001 12 8.01001C9.79086 8.01001 8 9.80087 8 12.01C8 14.2191 9.79086 16.01 12 16.01Z"
+          stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M2 11.98C8.09 1.31996 15.91 1.32996 22 11.98" stroke="#ffffff" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M22 12.01C15.91 22.67 8.09 22.66 2 12.01" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+      {{end}}
     </button>
     {{end}}
   </div>

@@ -7,7 +7,6 @@
   <title>{{.Title}}</title>
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico" />
   <link href="/static/style/dist/store.css" rel="stylesheet" />
-  <link href="/static/style/dist/utils.css" rel="stylesheet" />
   <script src="/static/js/utils.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -19,11 +18,13 @@
   {{if .Prods}}
   <div class="grid grid-flow-row-dense md:grid-cols-4 md:grid-rows-1 md:mb-2 grid-cols-1 grid-rows-1">
     {{range .Prods}}
-      {{template "card" .}}
+    {{if .IsActive}}
+    {{template "card" .}}
+    {{end}}
     {{ end }}
   </div>
   <script>
-    for (let i = 1; i < Number("{{len .Prods}}")+1; i++) {
+    for (let i = 1; i < Number("{{len .Prods}}") + 1; i++) {
       $('#length-' + i)[0].onchange();
     }
   </script>
