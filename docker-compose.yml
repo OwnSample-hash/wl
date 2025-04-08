@@ -1,0 +1,27 @@
+services:
+  mariadb:
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: db
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb
+      - redis
+    volumes:
+      - ./config:/app/config

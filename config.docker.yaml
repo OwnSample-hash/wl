@@ -1,0 +1,18 @@
+db:
+  host: mariadb
+  port: 3306
+  user: user
+  pass: password
+  database: db
+http:
+  bind: 0.0.0.0
+  port: 8080
+  write_timeout: 15
+  read_timeout: 15
+  ideal_timeout: 60
+redis:
+  host: redis
+  port: 6379
+  pass: ""
+  prefix: store_
+steam_api_key: 3509C5AE91554FBB1FCF4C41C8E3ACE9
