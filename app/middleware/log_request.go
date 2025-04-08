@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"github.com/gorilla/handlers"
 	"net/http"
 	"os"
+
+	"github.com/gorilla/handlers"
 )
 
 func LogRequest(next http.Handler) http.Handler {

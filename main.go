@@ -124,11 +124,12 @@ func main() {
 	ApiRouter.HandleFunc("coupon", coupons.Get).Methods("GET")
 
 	AdminRouter := r.PathPrefix("/admin").Subrouter()
-	AdminRouter.Use(middleware.CheckAdmin)
+	// AdminRouter.Use(middleware.CheckAdmin)
 	AdminRouter.HandleFunc("/", front.AdminHandler).Methods("GET")
 	AdminRouter.HandleFunc("/products", products.Add).Methods("POST")
 	AdminRouter.HandleFunc("/products/{id}", products.Delete).Methods("DELETE")
 	AdminRouter.HandleFunc("/products/{id}", products.Patch).Methods("PUT")
+	AdminRouter.HandleFunc("/products/{id}/flip", products.FlipVisibility).Methods("PATCH")
 	AdminRouter.HandleFunc("/coupon", coupons.Add).Methods("POST")
 	AdminRouter.HandleFunc("/coupon/{id}", coupons.Delete).Methods("DELETE")
 	AdminRouter.HandleFunc("/coupon/{id}", coupons.Put).Methods("PUT")

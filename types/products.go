@@ -11,6 +11,7 @@ type Product struct {
 	OneMonth               bool      `sql:"one_month"`
 	LifeTime               bool      `sql:"life_time"`
 	Discount               float64   `sql:"discount"`
+	IsActive               bool      `sql:"is_active"`
 	CreatedAt              time.Time `sql:"created_at"`
 	UpdatedAt              time.Time `sql:"updated_at"`
 	FormattedCreatedAt     string

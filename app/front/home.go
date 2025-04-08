@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"html/template"
 	"net/http"
+	"slices"
 	"store/app/api"
 	"store/app/api/coupons"
 	"store/app/api/products"
@@ -34,11 +35,8 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			panic(err)
 		}
-		for _, id := range util.Config.AdminIds {
-			if i == id {
-				isAdmin = true
-				break
-			}
+		if slices.Contains(util.Config.AdminIds, i) {
+			isAdmin = true
 		}
 	}
 	var User types.SteamUser

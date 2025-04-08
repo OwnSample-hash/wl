@@ -29,7 +29,7 @@ func GetRawProds(path string) (prods []types.Product) {
 	prods = make([]types.Product, 0)
 	for rows.Next() {
 		prod := types.Product{}
-		if err := rows.Scan(&prod.ID, &prod.Name, &prod.Description, &prod.PricePerMonth, &prod.Price, &prod.OneMonth, &prod.LifeTime, &prod.Discount, &prod.CreatedAt, &prod.UpdatedAt); err != nil {
+		if err := rows.Scan(&prod.ID, &prod.Name, &prod.Description, &prod.PricePerMonth, &prod.Price, &prod.OneMonth, &prod.LifeTime, &prod.Discount, &prod.IsActive, &prod.CreatedAt, &prod.UpdatedAt); err != nil {
 			log.Println(err)
 		}
 		prod.Path = path

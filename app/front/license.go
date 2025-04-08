@@ -6,6 +6,8 @@ import (
 	"store/types"
 	"store/util"
 	"strconv"
+
+	"github.com/gorilla/csrf"
 )
 
 func LicenseHandler(w http.ResponseWriter, r *http.Request) {
@@ -36,9 +38,10 @@ func LicenseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := types.Payload{
-		Title:   "License",
-		SteamID: steamID,
-		IsAdmin: isAdmin,
+		Title:     "License",
+		SteamID:   steamID,
+		IsAdmin:   isAdmin,
+		CsrfToken: csrf.Token(r),
 	}
 	err = tmpl.Execute(w, data)
 
