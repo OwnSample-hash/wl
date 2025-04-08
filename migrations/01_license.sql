@@ -1,9 +1,10 @@
-CREATE TABLE IF NOT EXISTS `store_licenses` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `uuid` UUID NOT NULL,
-  `valid_till` timestamp NOT NULL,
-  `grace_period` int NOT NULL DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CREATE OR REPLACE TABLE `store_licenses` (
+    `id` int NOT NULL AUTO_INCREMENT,
+    `uuid` UUID NOT NULL,
+    `user_id` long NOT NULL REFERENCES `store_users` (`secondary_id`),
+    `valid_till` timestamp NOT NULL,
+    `grace_period` int NOT NULL DEFAULT 14,
+    `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+  );
