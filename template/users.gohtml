@@ -2,12 +2,11 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{.Title}}</title>
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico" />
   <link href="/static/style/dist/store.css" rel="stylesheet" />
-  <script src="/static/js/utils.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
     integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
     crossorigin="anonymous"></script>
@@ -15,29 +14,22 @@
 
 <body>
   {{template "header" .}}
-  {{if .Prods}}
-  <div class="grid grid-flow-row-dense md:grid-cols-4 md:grid-rows-1 md:mb-2 grid-cols-1 grid-rows-1">
-    {{range .Prods}}
-    {{if .IsActive}}
-    {{template "card" .}}
-    {{end}}
-    {{ end }}
+  {{if .Users}}
+  <div class="mx-auto mt-10">
+    <div class="grid grid-flow-row-dense md:grid-cols-5 md:grid-rows-1 md:mb-2 grid-cols-1 grid-rows-1">
+      {{range .Users}}
+      {{template "user-card" .}}
+      {{end}}
+    </div>
   </div>
-  <script>
-    const ids = [{{ range .Prods }}{{ if .IsActive}}"{{.ID}}",{{ end }}{{ end }}];
-    ids.forEach((i) => {
-      $('#length-' + i)[0].onchange();
-    });
-  </script>
   {{else}}
   <div class="flex justify-center md:py-4 md:px-4">
     <div class="bg-gray-200 border-l-4 border-orange-500 text-orange-700 p-4 justify-center" role="alert">
       <p class="font-bold">Be Warned</p>
-      <p>No products.</p>
+      <p>No Users.</p>
     </div>
   </div>
-  {{ end }}
-
+  {{end}}
   {{template "footer" .}}
   <script src="/flowbite.min.js"></script>
 </body>

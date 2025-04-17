@@ -14,8 +14,71 @@
 
 <body class="bg-gray-900 text-white">
   {{template "header" .}}
+  {{if .License}}
+  <div class="container mx-auto mt-10">
+    <table class="w-full table-auto text-center border border-gray-800 rounded-xl">
+      <thead>
+        <tr>
+          <th scope="col" class="px-6 py-1">ID</th>
+          <th scope="col" class="px-6 py-1">UUID</th>
+          <th scope="col" class="px-6 py-1">UserId</th>
+          <th scope="col" class="px-6 py-1">VaildTill</th>
+          <th scope="col" class="px-6 py-1">GracePeriod</th>
+          <th scope="col" class="px-6 py-1">CreatedAt</th>
+          <th scope="col" class="px-6 py-1">UpdatedAt</th>
+          <th scope="col" class="px-6 py-1">Edit/Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{range .License}}
+        <tr class="even:bg-gray-900 odd:bg-gray-800 border-b border-gray-900">
+          <th scope="row" class="px-6 py-1">{{.Id}}</td>
+          <td class="px-6 py-1">{{.Uuid}}</td>
+          <td class="px-6 py-1">{{.UserId}}</td>
+          <td class="px-6 py-1">{{.FormattedValidTill}}</td>
+          <td class="px-6 py-1">{{.GracePeriod}}</td>
+          <td class="px-6 py-1">{{.FormattedCreatedAt}}</td>
+          <td class="px-6 py-1">{{.FormattedUpdatedAt}}</td>
+          <td class="px-6 py-1">
+            <div class="flex justify-center">
+              <button type="button" class="blue-btn mx-2">
+                <svg width="24" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M20.1498 7.93997L8.27978 19.81C7.21978 20.88 4.04977 21.3699 3.32977 20.6599C2.60977 19.9499 3.11978 16.78 4.17978 15.71L16.0498 3.84C16.5979 3.31801 17.3283 3.03097 18.0851 3.04019C18.842 3.04942 19.5652 3.35418 20.1004 3.88938C20.6356 4.42457 20.9403 5.14781 20.9496 5.90463C20.9588 6.66146 20.6718 7.39189 20.1498 7.93997V7.93997Z"
+                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <button type="button" class="red-btn">
+                <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M3 6.98996C8.81444 4.87965 15.1856 4.87965 21 6.98996" stroke="#ffffff" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <path
+                    d="M8.00977 5.71997C8.00977 4.6591 8.43119 3.64175 9.18134 2.8916C9.93148 2.14146 10.9489 1.71997 12.0098 1.71997C13.0706 1.71997 14.0881 2.14146 14.8382 2.8916C15.5883 3.64175 16.0098 4.6591 16.0098 5.71997"
+                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M12 13V18" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                  <path
+                    d="M19 9.98999L18.33 17.99C18.2225 19.071 17.7225 20.0751 16.9246 20.8123C16.1266 21.5494 15.0861 21.9684 14 21.99H10C8.91389 21.9684 7.87336 21.5494 7.07541 20.8123C6.27745 20.0751 5.77745 19.071 5.67001 17.99L5 9.98999"
+                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+          </td>
+        </tr>
+        {{end}}
+      </tbody>
+    </table>
+  </div>
+  {{else}}
+  <div class="flex justify-center md:py-4 md:px-4">
+    <div class="bg-gray-200 border-l-4 border-orange-500 text-orange-700 p-4 justify-center" role="alert">
+      <p class="font-bold">Be Warned</p>
+      <p>No License keys.</p>
+    </div>
+  </div>
+  {{end}}
   {{template "footer" .}}
-  <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+  <script src="/flowbite.min.js"></script>
 </body>
 
 </html>

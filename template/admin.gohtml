@@ -173,6 +173,12 @@
     {{range .Prods }}
     {{template "card" .}}
     {{ end }}
+    <script>
+      const ids = [{{ range .Prods }}{{ if .IsActive}}"{{.ID}}",{{ end }}{{ end }}];
+      ids.forEach((i) => {
+        $('#length-' + i)[0].onchange();
+      });
+    </script>
   </div>
   {{else}}
   <div class="flex justify-center h-screen py-4 px-4">
