@@ -1,12 +1,12 @@
 for (let i = 1; i < Number("{{len .Prods}}") + 1; i++) {
   $("#length-" + i)[0].onchange();
 }
-function sendPut(id) {
+function sendPut(id, CsrfToken) {
   $.ajax({
     method: "PUT",
     url: "/admin/products/" + id,
     headers: {
-      "X-CSRF-Token": "{{.CsrfToken}}",
+      "X-CSRF-Token": CsrfToken,
     },
     data: {
       name: $("#name").val(),
@@ -33,12 +33,12 @@ function sendPut(id) {
     },
   });
 }
-function deleteThis(id) {
+function deleteThis(id, CsrfToken) {
   $.ajax({
     method: "DELETE",
     url: "/admin/products/" + id,
     headers: {
-      "X-CSRF-Token": "{{.CsrfToken}}",
+      "X-CSRF-Token": CsrfToken,
     },
     success: function () {
       location.reload();
@@ -56,12 +56,12 @@ function deleteThis(id) {
     },
   });
 }
-function flipThis(id) {
+function flipThis(id, CsrfToken) {
   $.ajax({
     method: "PATCH",
     url: "/admin/products/" + id + "/flip",
     headers: {
-      "X-CSRF-Token": "{{.CsrfToken}}",
+      "X-CSRF-Token": CsrfToken,
     },
     success: function () {
       location.reload();
@@ -87,7 +87,8 @@ function editThis(
   life_time,
   price_per_month,
   price,
-  discount
+  discount,
+  CsrfToken
 ) {
   $("#submit-prod").html("Edit");
   $("#submit-prod").attr("type", "button");
@@ -98,5 +99,5 @@ function editThis(
   $("#price_per_month").val(price_per_month);
   $("#price").val(price);
   $("#discount").val(discount);
-  $("#submit-prod").attr("onclick", "sendPut('" + id + "')");
+  $("#submit-prod").attr("onclick", "sendPut('" + id+", " + CsrfToken + "')");
 }
