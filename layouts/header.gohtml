@@ -123,69 +123,40 @@
     <div class="w-1/2 h-12">
       <div class="flex justify-end space-x-6">
         <a href="/" class="flex items-center space-x-2">
-          <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M22 10.56C22 9.49913 21.5786 8.48171 20.8284 7.73157C20.0783 6.98142 19.0609 6.56 18 6.56H6C4.93913 6.56 3.92178 6.98142 3.17163 7.73157C2.42149 8.48171 2 9.49913 2 10.56"
-              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path
-              d="M21.9999 10.56L20.9999 18.56C20.8507 19.6487 20.3192 20.649 19.5002 21.3818C18.6813 22.1146 17.6285 22.5322 16.5299 22.56H7.38989C6.29132 22.5322 5.23847 22.1146 4.41956 21.3818C3.60064 20.649 3.0691 19.6487 2.91992 18.56L1.91992 10.56"
-              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            <path
-              d="M8.00977 6.25C8.00977 5.18913 8.43119 4.17172 9.18134 3.42157C9.93148 2.67142 10.9489 2.25 12.0098 2.25C13.0706 2.25 14.0881 2.67142 14.8382 3.42157C15.5883 4.17172 16.0098 5.18913 16.0098 6.25"
-              stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
+          <img src="/static/img/svg/bag-1.svg" alt="">
           <p>Store</p>
         </a>
         {{if .IsAdmin}}
         <div class="flex justify-end space-x-6">
           <a href="/admin/" class="flex items-center space-x-2 text-red-500">
-            <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
-                stroke="#f05252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
-                stroke="#f05252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M15 17.57L17.76 20.57L23 15.28" stroke="#F05252" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+            <img src="/static/img/svg/user-ok.svg" alt="">
             <p class="text-red-500">Admin</p>
+          </a>
+        </div>
+        <div class="flex justify-end space-x-6">
+          <a href="/admin/users" class="flex items-center space-x-2">
+            <img src="/static/img/svg/user-edit.svg" alt="">
+            <p>Users</p>
           </a>
         </div>
         {{end}}
         {{if .SteamID}}
         <div class="flex justify-end space-x-6">
           <a href="/license" class="flex items-center space-x-2">
-            <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M15 14.32C18.3137 14.32 21 11.6337 21 8.32001C21 5.0063 18.3137 2.32001 15 2.32001C11.6863 2.32001 9 5.0063 9 8.32001C9 11.6337 11.6863 14.32 15 14.32Z"
-                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M8 19.32L6 17.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M5 22.32L3 20.32" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-              <path d="M3 20.32L10.76 12.56" stroke="#fff" stroke-width="1.5" stroke-linecap="round"
-                stroke-linejoin="round" />
-            </svg>
+            <img src="/static/img/svg/key.svg" alt="">
             <p>License</p>
           </a>
         </div>
         <div class="flex justify-end space-x-6">
           <a href="/api/auth/logout" class="flex items-center space-x-2">
-            <svg width="24px" height="24px" viewBox="-0.5 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M12.1992 12C14.9606 12 17.1992 9.76142 17.1992 7C17.1992 4.23858 14.9606 2 12.1992 2C9.43779 2 7.19922 4.23858 7.19922 7C7.19922 9.76142 9.43779 12 12.1992 12Z"
-                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M3 22C3.57038 20.0332 4.74795 18.2971 6.36438 17.0399C7.98081 15.7827 9.95335 15.0687 12 15"
-                stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-              <path d="M15 18H23" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+            <img src="/static/img/svg/user-minus.svg" alt="">
             <p>Logout</p>
           </a>
         </div>
         <img src="{{.User.Avatar}}" alt="Steam Prof pic" class="rounded">
         {{else}}
         <a href="/api/auth">
-          <img src="/static/img/sits_small.png" alt="SITS">
+          <img src="/static/img/svg/user-plus.svg" alt="SITS">
         </a>
         {{end}}
       </div>

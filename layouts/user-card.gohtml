@@ -1,0 +1,25 @@
+{{define "user-card"}}
+<div class="w-3/4 mt-4 rounded shadow-lg bg-gray-800 ml-auto mr-auto px-4">
+  <div class="px-4 py-4">
+    <span class="text-gray-400">Id:</span>
+    {{.Id}}
+  </div>
+  <div class="px-4 pb-4">
+    <span class="text-gray-400">Secondary Id:</span>
+    {{.SecondaryId}}
+    </span>
+  </div>
+  <div class="px-4 py-2">
+    <span class="text-gray-400">Email:</span>
+    <p>{{.Email}}</p>
+  </div>
+  <div class="px-4 py-2">
+    <span class="text-gray-400">Created At:</span>
+    <span class="time">{{.FormattedCreatedAt}}</span>
+  </div>
+  <div class="px-4 pb-4">
+    <span class="text-gray-400">Updated At:</span>
+    <span class="time">{{.FormattedUpdatedAt}}</span>
+  </div>
+</div>
+{{end}}
