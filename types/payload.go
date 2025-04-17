@@ -12,6 +12,8 @@ type Payload struct {
 	User      SteamUser
 	Prods     []Product
 	Coupons   []Coupon
+	License   []License
+	Users     []User
 	CsrfField template.HTML
 	CsrfToken string
 }

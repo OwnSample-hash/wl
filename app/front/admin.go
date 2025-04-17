@@ -31,7 +31,7 @@ func AdminHandler(w http.ResponseWriter, r *http.Request) {
 	data := types.Payload{
 		Title:     "Admin",
 		SteamID:   steamID,
-		Prods:     products.GetRawProds(r.URL.Path),
+		Prods:     products.GetRawProds(r.URL.Path, csrf.Token(r)),
 		Coupons:   coupons.GetRawProds(),
 		Path:      r.URL.Path,
 		User:      api.GetSteamProfile(steamID),

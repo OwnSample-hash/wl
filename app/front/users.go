@@ -3,18 +3,17 @@ package front
 import (
 	"html/template"
 	"net/http"
-	"store/app/api/license"
+	"slices"
+	"store/app/api/users"
 	"store/types"
 	"store/util"
 	"strconv"
 
-	"slices"
-
 	"github.com/gorilla/csrf"
 )
 
-func LicenseHandler(w http.ResponseWriter, r *http.Request) {
-	tmpl, err := template.ParseFiles(util.GetTeamplte("license")...)
+func UserHandler(w http.ResponseWriter, r *http.Request) {
+	tmpl, err := template.ParseFiles(util.GetTeamplte("users")...)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -38,10 +37,10 @@ func LicenseHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := types.Payload{
-		Title:     "License",
+		Title:     "Users",
 		SteamID:   steamID,
 		IsAdmin:   isAdmin,
-		License:   license.GetRawLicenses(),
+		Users:     users.GetRawUsers(),
 		CsrfToken: csrf.Token(r),
 		CsrfField: csrf.TemplateField(r),
 	}

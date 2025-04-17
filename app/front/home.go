@@ -11,6 +11,8 @@ import (
 	"store/types"
 	"store/util"
 	"strconv"
+
+	"github.com/gorilla/csrf"
 )
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
@@ -58,7 +60,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			IsAdmin: isAdmin,
 			Path:    r.URL.Path,
 			User:    User,
-			Prods:   products.GetRawProds(r.URL.Path),
+			Prods:   products.GetRawProds(r.URL.Path, csrf.Token(r)),
 			Coupons: coupons.GetRawProds(),
 		}
 	} else {
@@ -68,7 +70,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			IsAdmin: isAdmin,
 			Path:    r.URL.Path,
 			User:    User,
-			Prods:   products.GetRawProds(r.URL.Path),
+			Prods:   products.GetRawProds(r.URL.Path, csrf.Token(r)),
 			Coupons: coupons.GetRawProds(),
 		}
 	}

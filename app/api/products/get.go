@@ -10,7 +10,7 @@ import (
 	"store/util"
 )
 
-func GetRawProds(path string) (prods []types.Product) {
+func GetRawProds(path string, CsrkToken string) (prods []types.Product) {
 	rows, err := util.Db.Query("SELECT * FROM store_products")
 	if errors.Is(err, sql.ErrNoRows) {
 		log.Fatal("No rows")
@@ -33,6 +33,7 @@ func GetRawProds(path string) (prods []types.Product) {
 			log.Println(err)
 		}
 		prod.Path = path
+		prod.CsrfToken = CsrkToken
 		prod.FormattedCreatedAt = prod.CreatedAt.Format("2006-01-02 15:04:05")
 		prod.FormattedUpdatedAt = prod.UpdatedAt.Format("2006-01-02 15:04:05")
 		if prod.Discount > 0 {
@@ -49,7 +50,7 @@ func GetRawProds(path string) (prods []types.Product) {
 
 func GetProducts(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(GetRawProds(r.URL.Path)); err != nil {
+	if err := json.NewEncoder(w).Encode(GetRawProds(r.URL.Path, "")); err != nil {
 		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 	}
 }

@@ -19,4 +19,5 @@ type Product struct {
 	Path                   string
 	DiscountPrice          float64
 	DiscountedMonthlyPrice float64
+	CsrfToken              string
 }

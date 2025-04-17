@@ -32,6 +32,9 @@ func GetRawLicenses() (licenses []types.License) {
 		if err := rows.Scan(&license.Id, &license.Uuid, &license.UserId, &license.ValidTill, &license.GracePeriod, &license.CreatedAt, &license.UpdatedAt); err != nil {
 			log.Println(err)
 		}
+		license.FormattedCreatedAt = license.CreatedAt.Format("2006-01-02 15:04:05")
+		license.FormattedUpdatedAt = license.UpdatedAt.Format("2006-01-02 15:04:05")
+		license.FormattedValidTill = license.ValidTill.Format("2006-01-02 15:04:05")
 		licenses = append(licenses, license)
 	}
 	return licenses

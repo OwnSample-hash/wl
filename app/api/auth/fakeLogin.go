@@ -11,7 +11,6 @@ func FakeLogin(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-  
 
 	session.Save(r, w)
 	http.Redirect(w, r, "/", http.StatusSeeOther)
