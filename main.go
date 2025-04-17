@@ -133,6 +133,7 @@ func main() {
 	AdminRouter.HandleFunc("/coupon", coupons.Add).Methods("POST")
 	AdminRouter.HandleFunc("/coupon/{id}", coupons.Delete).Methods("DELETE")
 	AdminRouter.HandleFunc("/coupon/{id}", coupons.Put).Methods("PUT")
+	AdminRouter.HandleFunc("/users", front.UserHandler).Methods("GET")
 
 	http.Handle("/", r)
 	srv := &http.Server{
@@ -146,7 +147,7 @@ func main() {
 		ErrorLog: log.New(log.Writer(), "ERROR: ", log.LstdFlags),
 	}
 	go func() {
-		log.Println("Listening on", srv.Addr)
+		log.Printf("Listening on http://%s\n", srv.Addr)
 		if err := srv.ListenAndServe(); err != nil {
 			log.Printf("ListenAndServe: %v\n", err)
 		}
