@@ -1,7 +1,8 @@
 #!/bin/bash
 
 getValues() {
-  python -c "import yaml,sys;eval(f'print(yaml.safe_load(open(sys.argv[1],\"r\")){\"\".join([f\"[\\\"{x}\\\"]\"for x in sys.argv[2].split(\".\")])})')" $1 $2
+  python -c "import yaml,sys;eval(f'print(yaml.safe_load(open(sys.argv[1],\"r\")){\"\".join([f\"[\\\"{x}\\\"]\"for x in sys.argv[2].split(\".\")])})')" $1 $2 2>/dev/null
+  return $?
 }
 
 CONFIG="config.yaml"
@@ -35,13 +36,21 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-for seed in $(ls Seeds);do
-  echo "Running seed: $seed"
-  mariadb -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASS $DB_DBNAME < Seeds/$seed
-  if [ $? -ne 0 ]; then
-    echo "Seeding failed for $seed."
-    exit 1
-  fi
-done
+#Check if we need to seed the database
+
+if [[ $(getValues $CONFIG "migrations" >/dev/null) -ne 0 ]]; then
+  echo "Seeding database..."
+  for seed in $(ls Seeds);do
+    echo "Running seed: $seed"
+    mariadb -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASS $DB_DBNAME < Seeds/$seed
+    if [ $? -ne 0 ]; then
+      echo "Seeding failed for $seed."
+      exit 1
+    fi
+  done
+  echo "Seeding completed successfully."
+else
+  echo "No seeding required."
+fi
 
 ./main

@@ -38,6 +38,11 @@ func Migrate(path string, down bool) {
 		}
 		return
 	}
+	log.Printf("%v", cfg.Migrations)
+	if len(cfg.Migrations) != 0 {
+		log.Println("Migrations already applied")
+		return
+	}
 	err = filepath.Walk("migrations", func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
