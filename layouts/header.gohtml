@@ -126,7 +126,6 @@
           <img src="/static/img/svg/bag-1.svg" alt="">
           <p>Store</p>
         </a>
-        {{if .IsAdmin}}
         <div class="flex justify-end space-x-6">
           <a href="/admin/" class="flex items-center space-x-2 text-red-500">
             <img src="/static/img/svg/user-ok.svg" alt="">
@@ -139,8 +138,7 @@
             <p>Users</p>
           </a>
         </div>
-        {{end}}
-        {{if .SteamID}}
+
         <div class="flex justify-end space-x-6">
           <a href="/license" class="flex items-center space-x-2">
             <img src="/static/img/svg/key.svg" alt="">
@@ -154,11 +152,6 @@
           </a>
         </div>
         <img src="{{.User.Avatar}}" alt="Prof pic" class="rounded">
-        {{else}}
-        <a href="/api/auth">
-          <img src="/static/img/svg/user-plus.svg" alt="">
-        </a>
-        {{end}}
       </div>
     </div>
   </div>
