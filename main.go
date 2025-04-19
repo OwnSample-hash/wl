@@ -96,6 +96,7 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/", front.HomeHandler)
 	r.HandleFunc("/license", front.LicenseHandler)
+	r.HandleFunc("/buy/{id}", front.Buy)
 	r.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/img/favicon.ico")
 	})
