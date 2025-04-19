@@ -16,4 +16,4 @@ A configurácós fájl a `config/` található
 - Termék vásárlás /buy/{id}
 - Licence /license
 - Felhasználók /admin/users
-- Admin felűlet /admin
+- Admin felület /admin
