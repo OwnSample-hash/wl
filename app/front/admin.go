@@ -3,7 +3,6 @@ package front
 import (
 	"html/template"
 	"net/http"
-	"store/app/api"
 	"store/app/api/coupons"
 	"store/app/api/products"
 	"store/types"
@@ -18,23 +17,11 @@ func AdminHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	session, err := util.Store.Get(r, "session")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-	steamID, ok := session.Values["steamID"].(string)
-	if !ok {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
-		return
-	}
 	data := types.Payload{
 		Title:     "Admin",
-		SteamID:   steamID,
 		Prods:     products.GetRawProds(r.URL.Path, csrf.Token(r)),
-		Coupons:   coupons.GetRawProds(),
+		Coupons:   coupons.GetRawCopons(),
 		Path:      r.URL.Path,
-		User:      api.GetSteamProfile(steamID),
 		IsAdmin:   true,
 		CsrfField: csrf.TemplateField(r),
 		CsrfToken: csrf.Token(r),

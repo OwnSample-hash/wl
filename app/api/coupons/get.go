@@ -10,13 +10,14 @@ import (
 	"store/util"
 )
 
-func GetRawProds() (coupons []types.Coupon) {
+func GetRawCopons() (coupons []types.Coupon) {
 	rows, err := util.Db.Query("SELECT * FROM store_coupons")
 
 	if errors.Is(err, sql.ErrNoRows) {
 		log.Print("No rows")
-		return nil
-	} else if err != nil {
+		return []types.Coupon{}
+	}
+	if err != nil {
 		panic(err)
 	}
 
@@ -44,7 +45,7 @@ func GetRawProds() (coupons []types.Coupon) {
 
 func Get(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	if err := json.NewEncoder(w).Encode(GetRawProds()); err != nil {
+	if err := json.NewEncoder(w).Encode(GetRawCopons()); err != nil {
 		http.Error(w, "Error encoding JSON", http.StatusInternalServerError)
 	}
 }

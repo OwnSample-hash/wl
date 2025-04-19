@@ -61,7 +61,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			Path:    r.URL.Path,
 			User:    User,
 			Prods:   products.GetRawProds(r.URL.Path, csrf.Token(r)),
-			Coupons: coupons.GetRawProds(),
+			Coupons: coupons.GetRawCopons(),
 		}
 	} else {
 		data = types.Payload{
@@ -71,7 +71,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 			Path:    r.URL.Path,
 			User:    User,
 			Prods:   products.GetRawProds(r.URL.Path, csrf.Token(r)),
-			Coupons: coupons.GetRawProds(),
+			Coupons: coupons.GetRawCopons(),
 		}
 	}
 
